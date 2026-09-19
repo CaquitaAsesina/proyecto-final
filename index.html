@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Test | Iniciar sesión</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-primary-subtle d-flex align-items-center" style="min-height: 100vh;">
+  <main class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-11 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+
+        <div class="animate-in text-center mb-4">
+          <span class="brand-badge d-inline-flex align-items-center justify-content-center mb-3">
+            <i class="bi bi-bank2 fs-2"></i>
+          </span>
+          <h1 class="h3 fw-bold mb-1 text-body">Banco Test</h1>
+          <p class="text-body-secondary mb-0"><small>Banca en línea</small></p>
+        </div>
+
+        <div class="animate-in d1 card shadow-lg border-0 rounded-4">
+          <div class="card-body p-4 p-sm-5">
+
+            <ul class="nav nav-underline mb-4" role="tablist">
+              <li class="nav-item">
+                <button class="nav-link active" id="tab-login" data-bs-toggle="tab" data-bs-target="#pane-login" type="button" role="tab">
+                  Iniciar sesión
+                </button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="tab-register" data-bs-toggle="tab" data-bs-target="#pane-register" type="button" role="tab">
+                  Registrarme
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <!-- LOGIN -->
+              <div class="tab-pane fade show active" id="pane-login" role="tabpanel" aria-labelledby="tab-login">
+                <form id="loginForm" class="needs-validation" novalidate>
+                  <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="accountNumber" placeholder=" " required autocomplete="username">
+                    <label for="accountNumber"><i class="bi bi-person-vcard me-1"></i> Número de cuenta</label>
+                    <div class="invalid-feedback">Ingresa tu número de cuenta.</div>
+                  </div>
+
+                  <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="password" placeholder=" " required autocomplete="current-password">
+                    <label for="password"><i class="bi bi-shield-lock me-1"></i> Contraseña</label>
+                    <div class="invalid-feedback">Ingresa tu contraseña.</div>
+                  </div>
+
+                  <div class="d-flex justify-content-end mb-4">
+                    <a href="#" class="link-primary small fw-medium" data-bs-toggle="modal" data-bs-target="#helpModal">¿Olvidaste tu contraseña?</a>
+                  </div>
+
+                  <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold rounded-3">
+                    <i class="bi bi-box-arrow-in-right me-1"></i> Ingresar
+                  </button>
+                </form>
+              </div>
+
+              <!-- REGISTER -->
+              <div class="tab-pane fade" id="pane-register" role="tabpanel" aria-labelledby="tab-register">
+                <form id="registerForm" class="needs-validation" novalidate>
+                  <div class="row g-3">
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="regFirstName" placeholder=" " required>
+                        <label for="regFirstName">Nombre</label>
+                        <div class="invalid-feedback">Requerido.</div>
+                      </div>
+                    </div>
+                    <div class="col-6">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="regLastName" placeholder=" " required>
+                        <label for="regLastName">Apellido</label>
+                        <div class="invalid-feedback">Requerido.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <input type="email" class="form-control" id="regEmail" placeholder=" " required>
+                        <label for="regEmail"><i class="bi bi-envelope me-1"></i> Correo electrónico</label>
+                        <div class="invalid-feedback">Ingresa un correo válido.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <input type="tel" class="form-control" id="regPhone" placeholder=" " required>
+                        <label for="regPhone"><i class="bi bi-telephone me-1"></i> Teléfono</label>
+                        <div class="invalid-feedback">Ingresa tu teléfono.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <input type="text" class="form-control" id="regCountry" placeholder=" " required>
+                        <label for="regCountry"><i class="bi bi-globe-americas me-1"></i> País</label>
+                        <div class="invalid-feedback">Ingresa tu país.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-floating">
+                        <input type="password" class="form-control" id="regPassword" placeholder=" " required minlength="6">
+                        <label for="regPassword"><i class="bi bi-shield-lock me-1"></i> Crear contraseña</label>
+                        <div class="invalid-feedback">Mínimo 6 caracteres.</div>
+                      </div>
+                    </div>
+                  </div>
+                  <button type="submit" class="btn btn-success w-100 py-2 fw-semibold rounded-3 mt-3">
+                    <i class="bi bi-person-plus me-1"></i> Crear cuenta
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-center text-body-secondary mt-4 small">
+          <i class="bi bi-shield-check me-1"></i> Conexión segura · Datos almacenados localmente
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Help modal -->
+  <div class="modal fade" id="helpModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-key me-2 text-primary"></i>Recuperar contraseña</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <div class="alert alert-info d-flex align-items-center mb-3">
+            <i class="bi bi-info-circle-fill me-2 fs-5"></i>
+            <div>
+              Usa una <strong>cuenta demo</strong> (frase = contraseña):<br>
+              <code>10001</code>/<code>20001</code> · <code>secret1</code> (Juan)<br>
+              <code>10002</code>/<code>20002</code> · <code>secret2</code> (María)<br>
+              <code>10003</code>/<code>20003</code> · <code>secret3</code> (Carlos)
+            </div>
+          </div>
+          <form class="needs-validation" id="recoverForm" novalidate>
+            <div class="form-floating">
+              <input type="text" class="form-control" id="recoverAccount" placeholder=" " required>
+              <label for="recoverAccount">Número de cuenta</label>
+              <div class="invalid-feedback">Ingresa tu número de cuenta.</div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" id="recoverBtn">Recuperar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    seedData();
+
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!loginForm.checkValidity()) {
+        loginForm.classList.add('was-validated');
+        return;
+      }
+      const account = document.getElementById('accountNumber').value.trim();
+      const password = document.getElementById('password').value;
+      const result = login(account, password);
+      if (result.ok) {
+        window.location.href = 'dashboard.html';
+      } else {
+        document.getElementById('password').value = '';
+        showToast(result.message, 'danger');
+      }
+    });
+
+    const registerForm = document.getElementById('registerForm');
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!registerForm.checkValidity()) {
+        registerForm.classList.add('was-validated');
+        return;
+      }
+      const result = registerClient({
+        firstName: document.getElementById('regFirstName').value.trim(),
+        lastName: document.getElementById('regLastName').value.trim(),
+        email: document.getElementById('regEmail').value.trim(),
+        phone: document.getElementById('regPhone').value.trim(),
+        country: document.getElementById('regCountry').value.trim(),
+      }, document.getElementById('regPassword').value);
+      if (result.ok) {
+        showToast(`Cuenta creada: <strong>${result.account}</strong>. Ya puedes iniciar sesión.`, 'success');
+        registerForm.reset();
+        registerForm.classList.remove('was-validated');
+        const tab = new bootstrap.Tab(document.getElementById('tab-login'));
+        tab.show();
+      } else {
+        showToast(result.message, 'danger');
+      }
+    });
+
+    document.getElementById('recoverBtn').addEventListener('click', (e) => {
+      e.preventDefault();
+      const account = document.getElementById('recoverAccount').value.trim();
+      const user = getClientByAccount(account);
+      if (user) {
+        showToast(`Tu contraseña es <strong>${user.password}</strong>.`, 'success');
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('helpModal')).hide();
+        document.getElementById('recoverForm').reset();
+        document.getElementById('recoverForm').classList.remove('was-validated');
+      } else {
+        showToast('No existe una cuenta con ese número.', 'danger');
+      }
+    });
+  </script>
+</body>
+</html>

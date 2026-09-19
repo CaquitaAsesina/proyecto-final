@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es" data-bs-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco Test | Panel</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar sticky-top">
+    <nav class="navbar navbar-expand-lg p-2">
+      <div class="container-fluid px-3 px-lg-4">
+        <span class="navbar-brand d-flex align-items-center gap-2 me-3">
+          <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3" style="width: 36px; height: 36px;">
+            <i class="bi bi-bank2 fs-5"></i>
+          </span>
+          <span class="fw-bold fs-5">Banco Test</span>
+        </span>
+
+        <button class="navbar-toggler d-lg-none p-2" type="button" data-bs-toggle="collapse" data-bs-target="#menuCollapse" aria-controls="menuCollapse" aria-expanded="false" aria-label="Abrir menú">
+          <i class="bi bi-list fs-3 lh-1"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="menuCollapse">
+          <div class="d-flex flex-column flex-lg-row gap-1 me-lg-3 my-2 my-lg-0" id="moduleNav">
+            <button type="button" class="btn btn-light fw-semibold rounded-3 text-start" data-module="movimientos">
+              <i class="bi bi-person-badge me-2"></i>Cuenta&nbsp;<span id="mainAccountLabel">-</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="dropdown ms-auto">
+          <button class="btn d-flex align-items-center gap-2 rounded-pill border-0 p-1 pe-2" data-bs-toggle="dropdown" aria-expanded="false">
+            <span class="rounded-circle text-white d-inline-flex align-items-center justify-content-center fw-bold" id="avatar" style="width: 34px; height: 34px;"></span>
+            <span class="d-none d-sm-inline text-start">
+              <span class="d-block fw-semibold lh-1" id="userName"></span>
+              <small class="text-body-secondary">Banca en línea</small>
+            </span>
+            <i class="bi bi-chevron-down small text-body-secondary"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow p-2" style="min-width: 280px;">
+            <li>
+              <div class="d-flex align-items-center gap-3 p-2 rounded-3 profile-box">
+                <span class="rounded-circle text-white d-inline-flex align-items-center justify-content-center fw-bold" id="ddAvatar" style="width: 48px; height: 48px; font-size: 1.2rem;"></span>
+                <div class="lh-sm">
+                  <div class="fw-bold" id="ddName">-</div>
+                  <small class="text-body-secondary"><i class="bi bi-patch-check-fill text-primary me-1"></i>Cliente verificado</small>
+                </div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <div class="px-2 py-1 d-grid gap-2 small" style="font-size: 0.85rem;">
+                <div class="d-flex gap-2 align-items-center"><i class="bi bi-envelope text-primary"></i><span id="ddEmail">-</span></div>
+                <div class="d-flex gap-2 align-items-center"><i class="bi bi-telephone text-success"></i><span id="ddPhone">-</span></div>
+                <div class="d-flex gap-2 align-items-center"><i class="bi bi-globe-americas text-warning"></i><span id="ddCountry">-</span></div>
+              </div>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item" id="themeToggle"><i class="bi bi-moon-stars me-2"></i>Cambiar a oscuro</button></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item text-danger" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</button></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container-fluid px-3 px-lg-4 py-4">
+    <!-- MÓDULO: MOVIMIENTOS -->
+    <section id="module-movimientos">
+      <div class="row g-4 mb-4">
+        <div class="animate-in d1 col-12 col-xl-4">
+          <div class="card shadow-sm border-0 client-name-card mb-4">
+            <div class="card-body p-3 d-flex align-items-center gap-3">
+              <span class="rounded-circle text-white d-inline-flex align-items-center justify-content-center fw-bold flex-shrink-0" id="heroAvatar" style="width: 48px; height: 48px;"></span>
+              <div class="lh-sm">
+                <small class="text-body-secondary d-block mb-1"><i class="bi bi-person-badge me-1"></i>Cliente</small>
+                <div class="fw-bold" id="heroName">-</div>
+                <small class="text-body-secondary"><i class="bi bi-globe-americas me-1"></i><span id="heroCountry">-</span></small>
+              </div>
+              <span class="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center ms-auto flex-shrink-0" style="width: 34px; height: 34px;" title="Verificado">
+                <i class="bi bi-patch-check-fill"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="bank-card balance-hero text-white shadow">
+            <div class="d-flex justify-content-between align-items-start">
+              <span class="bank-brand"><i class="bi bi-bank2"></i> Banco Test</span>
+              <span class="badge rounded-3 bg-white text-primary fw-semibold px-2 py-1"><i class="bi bi-patch-check-fill me-1"></i>Principal</span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <span class="chip"></span>
+              <i class="bi bi-wifi contactless" aria-hidden="true"></i>
+            </div>
+            <div>
+              <small class="d-block opacity-75 bank-label">PATRIMONIO TOTAL</small>
+              <div class="balance-hero-amount fw-bold ls-tight" id="totalBalance">$0.00</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-end">
+              <div class="lh-sm">
+                <small class="d-block opacity-75 bank-label">TITULAR</small>
+                <span class="fw-semibold small" id="cardHolder">-</span>
+              </div>
+              <button class="btn btn-sm rounded-pill bg-white bg-opacity-25 border border-white border-opacity-25 text-white" id="eyeToggle" title="Ocultar / mostrar saldos">
+                <i class="bi bi-eye-slash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-in d2 col-12 col-xl-8">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body p-4">
+              <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-credit-card-2-front me-2 text-primary"></i>Mis cuentas</h5>
+                <span class="badge rounded-pill text-bg-primary" id="accountCount">0</span>
+                <span class="badge rounded-pill text-bg-warning" id="mainAccountPill">-</span>
+                <div class="ms-auto d-flex align-items-center gap-2">
+                  <div class="btn-group" role="group" aria-label="Desplazar cuentas">
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-scroll="-1" aria-label="Ver anteriores"><i class="bi bi-chevron-left"></i></button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" data-scroll="1" aria-label="Ver siguientes"><i class="bi bi-chevron-right"></i></button>
+                  </div>
+                  <button type="button" class="btn btn-primary btn-sm fw-semibold" data-role="transfer">
+                    <i class="bi bi-send me-1"></i>Nueva transferencia
+                  </button>
+                </div>
+              </div>
+              <div class="accounts-scroll" id="accountsList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-12 col-lg-5 col-xl-4">
+          <div class="card shadow-sm border-0 d-flex flex-column" id="historyCard">
+            <div class="card-body py-2 border-bottom d-flex flex-column gap-2">
+              <div class="d-flex justify-content-between align-items-center mb-3" style="padding-top:0.9rem">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-list-ul me-2 text-primary"></i>Historial de movimientos</h5>
+              </div>
+              <div class="d-flex flex-wrap align-items-center gap-2">
+                <label class="text-body-secondary small text-nowrap" for="filterSince">Desde</label>
+                <input type="date" class="form-control form-control-sm" id="filterSince" aria-label="Fecha desde" style="width: 122px;">
+                <label class="text-body-secondary small text-nowrap" for="filterUntil">Hasta</label>
+                <input type="date" class="form-control form-control-sm" id="filterUntil" aria-label="Fecha hasta" style="width: 122px;">
+              </div>
+              <div class="d-flex align-items-center gap-2">
+                <select class="form-select form-select-sm" id="filterStatus" aria-label="Filtrar por estado">
+                  <option value="all">Todos los estados</option>
+                  <option value="completado">Completado</option>
+                  <option value="pendiente">Pendiente</option>
+                </select>
+                <button type="button" class="btn btn-sm btn-outline-secondary flex-shrink-0" id="filterClear" title="Limpiar filtros">
+                  <i class="bi bi-x-lg me-1"></i>Limpiar
+                </button>
+              </div>
+            </div>
+            <div class="table-responsive history-table">
+              <table class="table table-bordered table-hover align-middle mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th scope="col" class="text-nowrap" style="width: 78px;">Fecha</th>
+                    <th scope="col" class="text-nowrap" style="width: 88px;">Cuenta</th>
+                    <th scope="col" class="text-center text-nowrap" style="width: 92px;">Estado</th>
+                    <th scope="col" class="text-end text-nowrap" style="width: 80px;">Detalles</th>
+                  </tr>
+                </thead>
+                <tbody id="transactionList"></tbody>
+              </table>
+            </div>
+            <div id="emptyState" class="text-center text-body-secondary py-5 d-none">
+              <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+              No hay movimientos con este filtro.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-lg-7 col-xl-8">
+          <div class="card shadow-sm border-0 h-100" id="statsCard">
+            <div class="card-body p-4">
+              <h5 class="mb-0 fw-bold"><i class="bi bi-graph-up-arrow me-2 text-primary"></i>Estadísticas · Dinero en general</h5>
+
+              <div class="mt-3 row g-2 mb-3">
+                <div class="col-4">
+                  <div class="stat-chip">
+                    <small class="text-body-secondary d-block mb-1">Patrimonio actual</small>
+                    <span class="fw-bold text-nowrap" id="statBalance">$0.00</span>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="stat-chip">
+                    <small class="text-body-secondary d-block mb-1">Entradas</small>
+                    <span class="fw-bold text-success text-nowrap" id="statInAmount">$0.00</span>
+                    <small class="text-success d-block" id="statInCount"></small>
+                  </div>
+                </div>
+                <div class="col-4">
+                  <div class="stat-chip">
+                    <small class="text-body-secondary d-block mb-1">Salidas</small>
+                    <span class="fw-bold text-danger text-nowrap" id="statOutAmount">$0.00</span>
+                    <small class="text-danger d-block" id="statOutCount"></small>
+                  </div>
+                </div>
+              </div>
+
+              <p class="small fw-semibold mb-1">Evolución del saldo · últimos 15 días</p>
+              <div class="chart-svg-wrap">
+                <svg id="chartSvg" viewBox="0 0 620 220" preserveAspectRatio="none" class="chart-svg" role="img" aria-label="Evolución del saldo"></svg>
+              </div>
+              <div class="d-flex justify-content-between small text-body-secondary mt-1">
+                <span id="chartStartLabel"></span>
+                <span id="chartEndLabel"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Transfer modal -->
+  <div class="modal fade" id="transferModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold"><i class="bi bi-send me-2 text-primary"></i>Nueva transferencia</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <form class="needs-validation" id="transferForm" novalidate>
+          <div class="modal-body">
+            <div class="form-floating mb-3">
+              <select class="form-select" id="fromAccount" required>
+                <option value="" selected disabled>Selecciona una cuenta</option>
+              </select>
+              <label for="fromAccount"><i class="bi bi-wallet2 me-1"></i> Cuenta de origen</label>
+              <div class="invalid-feedback">Selecciona la cuenta que envía.</div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="toAccount" placeholder=" " required autocomplete="off">
+              <label for="toAccount"><i class="bi bi-person-vcard me-1"></i> Cuenta destino</label>
+              <div class="invalid-feedback">Ingresa el número de cuenta destino.</div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <select class="form-select" id="transferType" required>
+                <option value="" selected disabled>Selecciona un tipo</option>
+                <option value="Yape">Yape</option>
+                <option value="Plin">Plin</option>
+                <option value="Transferencia">Transferencia</option>
+              </select>
+              <label for="transferType"><i class="bi bi-arrow-left-right me-1"></i> Tipo de transferencia</label>
+              <div class="invalid-feedback">Selecciona el tipo de transferencia.</div>
+            </div>
+
+            <div class="form-floating">
+              <input type="number" class="form-control" id="amount" placeholder=" " required min="0.01" step="0.01">
+              <label for="amount"><i class="bi bi-cash-coin me-1"></i> Monto (USD)</label>
+              <div class="invalid-feedback">Ingresa un monto válido mayor a $0.</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-primary fw-semibold">
+              <span class="spinner-border spinner-border-sm d-none" id="transferSpinner"></span>
+              <i class="bi bi-check-lg" id="transferCheck"></i> Confirmar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirm modal -->
+  <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-body text-center p-4">
+          <span class="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px;">
+            <i class="bi bi-check-lg fs-2"></i>
+          </span>
+          <h5 class="fw-bold mb-1">Transferencia exitosa</h5>
+          <p class="text-body-secondary small mb-0" id="confirmText"></p>
+        </div>
+        <div class="modal-footer justify-content-center border-0 pt-0 pb-4">
+          <button type="button" class="btn btn-primary w-100 rounded-3" data-bs-dismiss="modal">Entendido</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail modal -->
+  <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+      <div class="modal-content border-0 shadow">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold"><i class="bi bi-receipt me-2 text-primary"></i>Detalle del movimiento</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body" id="detailBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!initDashboardUI()) return;
+
+      document.getElementById('logoutBtn').addEventListener('click', logout);
+      document.getElementById('eyeToggle').addEventListener('click', toggleBalanceVisibility);
+
+      document.querySelectorAll('[data-module]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('[data-module]').forEach(b =>
+            b.classList.toggle('active', b === btn));
+          const collapse = bootstrap.Collapse.getInstance(document.getElementById('menuCollapse'));
+          if (collapse) collapse.hide();
+        });
+      });
+
+      document.querySelectorAll('[data-role="transfer"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          openTransferModal();
+          const collapse = bootstrap.Collapse.getInstance(document.getElementById('menuCollapse'));
+          if (collapse) collapse.hide();
+        });
+      });
+
+      document.querySelectorAll('[data-scroll]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const carousel = document.getElementById('accountsList');
+          const dir = parseInt(btn.dataset.scroll, 10);
+          carousel.scrollBy({ left: dir * 300, behavior: 'smooth' });
+        });
+      });
+
+      document.querySelectorAll('#filterSince, #filterUntil, #filterStatus').forEach(el => {
+        el.addEventListener('change', () => {
+          state.dateFrom = document.getElementById('filterSince').value;
+          state.dateTo = document.getElementById('filterUntil').value;
+          state.statusFilter = document.getElementById('filterStatus').value;
+          renderMovimientos();
+        });
+      });
+
+      document.getElementById('filterClear').addEventListener('click', () => {
+        document.getElementById('filterSince').value = '';
+        document.getElementById('filterUntil').value = '';
+        document.getElementById('filterStatus').value = 'all';
+        state.dateFrom = '';
+        state.dateTo = '';
+        state.statusFilter = 'all';
+        renderMovimientos();
+      });
+
+      document.getElementById('transferForm').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = e.target;
+        if (!form.checkValidity()) {
+          form.classList.add('was-validated');
+          return;
+        }
+        const fromAccount = document.getElementById('fromAccount').value;
+        const toAccount = document.getElementById('toAccount').value.trim();
+        const amount = parseFloat(document.getElementById('amount').value);
+        const transferType = document.getElementById('transferType').value;
+        const result = transfer(fromAccount, toAccount, amount, transferType);
+        if (result.ok) {
+          bootstrap.Modal.getInstance(document.getElementById('transferModal')).hide();
+          form.reset();
+          form.classList.remove('was-validated');
+          const recipient = getClientByAccount(toAccount);
+          document.getElementById('confirmText').textContent =
+            `${transferType} · Enviaste $${amount.toFixed(2)} a ${recipient ? recipient.firstName : 'la cuenta'} ${toAccount}.`;
+          bootstrap.Modal.getOrCreateInstance(document.getElementById('confirmModal')).show();
+          renderAll();
+        } else {
+          showToast(result.message, 'danger');
+          if (result.message.includes('destino')) {
+            document.getElementById('toAccount').classList.add('is-invalid');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
