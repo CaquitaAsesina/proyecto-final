@@ -329,7 +329,6 @@ const state = {
   dateFrom: '',
   dateTo: '',
   statusFilter: 'all',
-  balanceVisible: true,
 };
 
 function initDashboardUI() {
@@ -397,11 +396,6 @@ function toggleTheme() {
   buildThemeToggle(next === 'dark');
 }
 
-function toggleBalanceVisibility() {
-  state.balanceVisible = !state.balanceVisible;
-  renderAll();
-}
-
 function renderAll() {
   renderClient();
   renderAccounts();
@@ -421,7 +415,6 @@ function renderClient() {
   document.getElementById('avatar').textContent = initials;
   document.getElementById('ddAvatar').textContent = initials;
   document.getElementById('ddName').textContent = `${client.firstName} ${client.lastName}`;
-  document.getElementById('cardHolder').textContent = `${client.firstName} ${client.lastName}`;
   document.getElementById('heroAvatar').textContent = initials;
   document.getElementById('heroName').textContent = `${client.firstName} ${client.lastName}`;
   document.getElementById('heroEmail').textContent = client.email;
@@ -431,16 +424,6 @@ function renderClient() {
   const isActive = client.status !== 'inactivo';
   statusEl.textContent = isActive ? 'Activo' : 'Inactivo';
   statusEl.className = `badge rounded-pill ${isActive ? 'text-bg-success' : 'text-bg-danger'}`;
-  document.getElementById('ddEmail').textContent = client.email;
-  document.getElementById('ddPhone').textContent = client.phone;
-  document.getElementById('ddCountry').textContent = client.country;
-
-  const hidden = state.balanceVisible ? '' : '••••';
-  const total = client.accounts.reduce((s, a) => s + a.balance, 0);
-  document.getElementById('totalBalance').textContent = state.balanceVisible ? currency(total) : hidden;
-  document.getElementById('eyeToggle').innerHTML = state.balanceVisible
-    ? '<i class="bi bi-eye-slash"></i>'
-    : '<i class="bi bi-eye"></i>';
 }
 
 function renderAccounts() {

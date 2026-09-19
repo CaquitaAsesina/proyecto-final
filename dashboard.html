@@ -52,14 +52,6 @@
               </div>
             </li>
             <li><hr class="dropdown-divider"></li>
-            <li>
-              <div class="px-2 py-1 d-grid gap-2 small" style="font-size: 0.85rem;">
-                <div class="d-flex gap-2 align-items-center"><i class="bi bi-envelope text-primary"></i><span id="ddEmail">-</span></div>
-                <div class="d-flex gap-2 align-items-center"><i class="bi bi-telephone text-success"></i><span id="ddPhone">-</span></div>
-                <div class="d-flex gap-2 align-items-center"><i class="bi bi-globe-americas text-warning"></i><span id="ddCountry">-</span></div>
-              </div>
-            </li>
-            <li><hr class="dropdown-divider"></li>
             <li><button class="dropdown-item" id="themeToggle"><i class="bi bi-moon-stars me-2"></i>Cambiar a oscuro</button></li>
             <li><hr class="dropdown-divider"></li>
             <li><button class="dropdown-item text-danger" id="logoutBtn"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</button></li>
@@ -73,8 +65,8 @@
     <!-- MÓDULO: MOVIMIENTOS -->
     <section id="module-movimientos">
       <div class="row g-4 mb-4">
-        <div class="animate-in d1 col-12 col-xl-4 d-flex flex-column">
-          <div class="card shadow-sm border-0 client-name-card mb-4 flex-grow-1">
+        <div class="animate-in d1 col-12 col-xl-4">
+          <div class="card shadow-sm border-0 client-name-card">
             <div class="card-body p-0 d-flex h-100">
               <div class="fotocheck-lg d-flex flex-column align-items-center justify-content-center text-center flex-shrink-0">
                 <i class="bi bi-bank2"></i>
@@ -95,30 +87,6 @@
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div class="bank-card balance-hero text-white shadow mt-auto">
-            <div class="d-flex justify-content-between align-items-start">
-              <span class="bank-brand"><i class="bi bi-bank2"></i> Banco BBVA</span>
-              <span class="badge rounded-3 bg-white text-primary fw-semibold px-2 py-1"><i class="bi bi-patch-check-fill me-1"></i>Principal</span>
-            </div>
-            <div class="d-flex align-items-center gap-3">
-              <span class="chip"></span>
-              <i class="bi bi-wifi contactless" aria-hidden="true"></i>
-            </div>
-            <div>
-              <small class="d-block opacity-75 bank-label">PATRIMONIO TOTAL</small>
-              <div class="balance-hero-amount fw-bold ls-tight" id="totalBalance">$0.00</div>
-            </div>
-            <div class="d-flex justify-content-between align-items-end">
-              <div class="lh-sm">
-                <small class="d-block opacity-75 bank-label">TITULAR</small>
-                <span class="fw-semibold small" id="cardHolder">-</span>
-              </div>
-              <button class="btn btn-sm rounded-pill bg-white bg-opacity-25 border border-white border-opacity-25 text-white" id="eyeToggle" title="Ocultar / mostrar saldos">
-                <i class="bi bi-eye-slash"></i>
-              </button>
             </div>
           </div>
         </div>
@@ -327,7 +295,6 @@
       if (!initDashboardUI()) return;
 
       document.getElementById('logoutBtn').addEventListener('click', logout);
-      document.getElementById('eyeToggle').addEventListener('click', toggleBalanceVisibility);
 
       document.querySelectorAll('[data-module]').forEach(btn => {
         btn.addEventListener('click', () => {

@@ -180,7 +180,7 @@ body[data-bs-theme='dark'] .btn-light {
   width: 170px;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(102, 16, 242, 0.1));
   border-right: 1.5px dashed var(--bs-primary);
-  font-size: 0.65rem;
+  font-size: 0.8rem;
   color: var(--bs-primary);
   line-height: 1.1;
   padding: 0.5rem;
@@ -189,7 +189,7 @@ body[data-bs-theme='dark'] .btn-light {
 }
 
 .client-name-card .fotocheck-lg i {
-  font-size: 2.6rem;
+  font-size: 4rem;
   margin-bottom: 0.3rem;
 }
 
@@ -321,7 +321,7 @@ body[data-bs-theme='dark'] .btn-light {
 }
 
 .bank-card.bank-card-sm .bank-owner {
-  font-size: 0.55rem;
+  font-size: 0.7rem;
 }
 
 .bank-card.bank-card-sm .bank-label {
