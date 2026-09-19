@@ -146,6 +146,53 @@ body[data-bs-theme='dark'] .btn-light {
   box-shadow: var(--shadow-md);
 }
 
+.client-name-card .badge {
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+}
+
+.client-name-card .badge i {
+  font-size: 0.85rem;
+}
+
+.client-name-card .d-flex.flex-wrap {
+  gap: 0.4rem;
+}
+
+.client-name-card .fotocheck {
+  width: 56px;
+  height: 64px;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.06), rgba(102, 16, 242, 0.06));
+  border: 1.5px dashed var(--bs-primary);
+  border-radius: 8px;
+  font-size: 0.5rem;
+  color: var(--bs-primary);
+  line-height: 1.1;
+  padding: 0.3rem;
+}
+
+.client-name-card .fotocheck i {
+  font-size: 1.1rem;
+}
+
+.client-name-card .fotocheck-lg {
+  width: 170px;
+  background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(102, 16, 242, 0.1));
+  border-right: 1.5px dashed var(--bs-primary);
+  font-size: 0.65rem;
+  color: var(--bs-primary);
+  line-height: 1.1;
+  padding: 0.5rem;
+  border-top-left-radius: 0.9rem;
+  border-bottom-left-radius: 0.9rem;
+}
+
+.client-name-card .fotocheck-lg i {
+  font-size: 2.6rem;
+  margin-bottom: 0.3rem;
+}
+
 /* ---- Main (principal) bank card ---- */
 .balance-hero {
   background: var(--grad-brand-animated);
@@ -237,6 +284,11 @@ body[data-bs-theme='dark'] .btn-light {
 .d-badge-warning {
   background: #ffc107;
   color: #7a4f01;
+}
+
+.d-badge-info {
+  background: #0dcaf0;
+  color: #000;
 }
 
 .bank-card.bank-card-sm {

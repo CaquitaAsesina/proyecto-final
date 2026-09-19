@@ -3,7 +3,7 @@ const STORAGE_KEYS = {
   session: 'bank_session',
   transactions: 'bank_transactions',
   theme: 'bank_theme',
-  seed: 'bank_seed_v9',
+  seed: 'bank_seed_v10',
 };
 
 function getClients() {
@@ -54,6 +54,7 @@ function seedData() {
       country: 'Colombia',
       device: 'iPhone 15 Pro',
       password: 'secret4',
+      status: 'activo',
       accounts: [
         { account: '40001', type: 'Corriente', balance: 12000.0 },
         { account: '40002', type: 'Ahorro', balance: 8500.0 },
@@ -74,6 +75,7 @@ function seedData() {
       country: 'México',
       device: 'Android Galaxy S24',
       password: 'secret1',
+      status: 'activo',
       accounts: [
         { account: '10001', type: 'Corriente', balance: 5240.75 },
         { account: '20001', type: 'Ahorro', balance: 15000.0 },
@@ -88,6 +90,7 @@ function seedData() {
       country: 'España',
       device: 'iPad Air',
       password: 'secret2',
+      status: 'inactivo',
       accounts: [
         { account: '10002', type: 'Corriente', balance: 3850.5 },
         { account: '20002', type: 'Ahorro', balance: 8700.25 },
@@ -102,6 +105,7 @@ function seedData() {
       country: 'Estados Unidos',
       device: 'MacBook Pro',
       password: 'secret3',
+      status: 'activo',
       accounts: [
         { account: '10003', type: 'Corriente', balance: 1230.4 },
         { account: '20003', type: 'Ahorro', balance: 4100.0 },
@@ -114,7 +118,7 @@ function seedData() {
   const push = (account, entry) => {
     const base = new Date(entry.date);
     const end = new Date(base.getTime() + Math.floor(Math.random() * 20 + 3) * 60000);
-    (transactions[account] = transactions[account] || []).push({ status: 'completado', end: end.toISOString(), ...entry });
+    (transactions[account] = transactions[account] || []).push({ status: 'aprobado', end: end.toISOString(), ...entry });
   };
 
   push('10001', { type: 'out', to: '10002', amount: 250, date: daysAgo(2, 10) });
@@ -180,9 +184,9 @@ function seedData() {
     while (to === from) to = allAccounts[Math.floor(Math.random() * allAccounts.length)];
     const amount = Math.round(rand(25, 950) * 100) / 100;
     const date = daysAgo(Math.floor(rand(0, 30)), Math.floor(rand(0, 23)));
-    const status = Math.random() < 0.12 ? 'pendiente' : 'completado';
-    push(from, { type: 'out', to, amount, date, status });
-    push(to, { type: 'in', from, amount, date, status });
+    const status = Math.random() < 0.08 ? 'rechazado' : Math.random() < 0.12 ? 'pendiente' : 'aprobado';
+    push(from, { type: 'out', to, amount, date, status, transferType: depTypes[Math.floor(Math.random() * depTypes.length)] });
+    push(to, { type: 'in', from, amount, date, status, transferType: depTypes[Math.floor(Math.random() * depTypes.length)] });
   }
 
   saveTransactions(transactions);
@@ -283,8 +287,8 @@ function transfer(fromAccount, toAccount, amount, transferType) {
   const date = new Date().toISOString();
   const end = new Date(Date.now() + 60000).toISOString();
   const transactions = getTransactions();
-  (transactions[fromAccount] = transactions[fromAccount] || []).push({ type: 'out', to: toAccount, amount, date, end, status: 'completado', transferType });
-  (transactions[toAccount] = transactions[toAccount] || []).push({ type: 'in', from: fromAccount, amount, date, end, status: 'completado', transferType });
+  (transactions[fromAccount] = transactions[fromAccount] || []).push({ type: 'out', to: toAccount, amount, date, end, status: 'aprobado', transferType });
+  (transactions[toAccount] = transactions[toAccount] || []).push({ type: 'in', from: fromAccount, amount, date, end, status: 'aprobado', transferType });
   saveTransactions(transactions);
 
   return { ok: true, message: 'Transferencia realizada con éxito.' };
@@ -420,7 +424,13 @@ function renderClient() {
   document.getElementById('cardHolder').textContent = `${client.firstName} ${client.lastName}`;
   document.getElementById('heroAvatar').textContent = initials;
   document.getElementById('heroName').textContent = `${client.firstName} ${client.lastName}`;
+  document.getElementById('heroEmail').textContent = client.email;
+  document.getElementById('heroPhone').textContent = client.phone;
   document.getElementById('heroCountry').textContent = client.country;
+  const statusEl = document.getElementById('heroStatus');
+  const isActive = client.status !== 'inactivo';
+  statusEl.textContent = isActive ? 'Activo' : 'Inactivo';
+  statusEl.className = `badge rounded-pill ${isActive ? 'text-bg-success' : 'text-bg-danger'}`;
   document.getElementById('ddEmail').textContent = client.email;
   document.getElementById('ddPhone').textContent = client.phone;
   document.getElementById('ddCountry').textContent = client.country;
@@ -451,7 +461,7 @@ function renderAccounts() {
     slide.innerHTML = `
       <div class="bank-card${isMain ? ' main-account' : ''}">
         <div class="d-flex justify-content-between align-items-start">
-          <span class="bank-brand"><i class="bi bi-bank2"></i> Banco Test</span>
+          <span class="bank-brand"><i class="bi bi-bank2"></i> Banco BBVA</span>
           <span class="d-flex gap-1">
             ${isMain ? '<span class="badge rounded-pill text-bg-warning">Principal</span>' : ''}
             <span class="badge rounded-pill text-bg-primary bg-opacity-75">${acc.type}</span>
@@ -508,7 +518,7 @@ function renderMovimientos() {
     });
   }
   if (state.statusFilter !== 'all') {
-    shown = shown.filter(t => (t.status || 'completado') === state.statusFilter);
+    shown = shown.filter(t => t.status === state.statusFilter);
   }
 
   renderTable(shown);
@@ -632,16 +642,17 @@ function renderTable(transactions) {
     const destDevice = destClient && destClient.device ? destClient.device : '—';
     const amountClass = isOut ? 'text-danger' : 'text-success';
     const sign = isOut ? '-' : '+';
-    const pending = (tx.status || 'completado') === 'pendiente';
-    const statusClass = pending ? 'text-bg-warning' : 'text-bg-success';
-    const statusLabel = pending ? 'Pendiente' : 'Completado';
+    const pending = tx.status === 'pendiente';
+    const rejected = tx.status === 'rechazado';
+    const statusClass = rejected ? 'text-bg-danger' : pending ? 'text-bg-warning' : 'text-bg-success';
+    const statusLabel = rejected ? 'Rechazado' : pending ? 'Pendiente' : 'Aprobado';
     const date = new Date(tx.date);
 
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td class="text-body-secondary small text-nowrap">${formatDateOnly(date)}</td>
       <td class="text-nowrap fw-medium">${destAccount}</td>
-      <td class="text-center"><span class="badge rounded-pill ${pending ? 'text-bg-warning' : 'text-bg-success'}">${statusLabel}</span></td>
+      <td class="text-center"><span class="badge rounded-pill ${statusClass}">${statusLabel}</span></td>
       <td class="text-end">
         <button type="button" class="btn-detail" data-detail title="Ver detalles completos">
           <i class="bi bi-box-arrow-up-right"></i>
@@ -658,14 +669,25 @@ function openDetailModal(tx) {
   const isOut = tx.type === 'out';
   const destAccount = isOut ? tx.to : tx.account;
   const destClient = getClientByAccount(destAccount);
-  const pending = (tx.status || 'completado') === 'pendiente';
+  const pending = tx.status === 'pendiente';
+  const rejected = tx.status === 'rechazado';
+  const deposit = tx.type === 'in';
+  const transferType = tx.transferType || 'Transferencia';
   const destName = destClient ? `${destClient.firstName} ${destClient.lastName}` : '—';
   const destCountry = destClient ? destClient.country : '—';
   const date = new Date(tx.date);
   const end = new Date(tx.end || tx.date);
   const sign = isOut ? '-' : '+';
-  const tipoBadge = `<span class="badge rounded-pill ${isOut ? 'text-bg-danger' : 'text-bg-success'}">${isOut ? 'Salida' : 'Entrada'}</span>`;
-  const estadoBadge = `<span class="badge rounded-pill ${pending ? 'text-bg-warning' : 'text-bg-success'}">${pending ? 'Pendiente' : 'Completado'}</span>`;
+  const tipoBadge = `<span class="d-badge ${isOut ? 'd-badge-danger' : 'd-badge-success'}"><i class="bi ${isOut ? 'bi-arrow-up-right' : 'bi-arrow-down-left'}"></i>${isOut ? 'Salida' : 'Entrada'}</span>`;
+  const estadoBadge = rejected
+    ? '<span class="d-badge d-badge-danger"><i class="bi bi-x-circle"></i>Rechazado</span>'
+    : pending
+    ? '<span class="d-badge d-badge-warning"><i class="bi bi-hourglass-split"></i>Pendiente</span>'
+    : '<span class="d-badge d-badge-success"><i class="bi bi-check-circle"></i>Aprobado</span>';
+  const depositBadge = deposit
+    ? '<span class="d-badge d-badge-info"><i class="bi bi-box-arrow-in-down"></i>Depósito</span>'
+    : '';
+  const typeBadge = `<span class="d-badge d-badge-secondary"><i class="bi ${transferType === 'Yape' ? 'bi-phone' : transferType === 'Plin' ? 'bi-phone' : 'bi-bank'}"></i>${transferType}</span>`;
 
   const last4 = destAccount.slice(-4);
   const expMonth = String((parseInt(destAccount, 10) % 12) + 1).padStart(2, '0');
@@ -690,7 +712,7 @@ function openDetailModal(tx) {
       <div class="detail-top">
         <div class="bank-card bank-card-sm">
           <div class="d-flex justify-content-between align-items-start">
-            <span class="bank-brand"><i class="bi bi-bank2"></i>Banco</span>
+            <span class="bank-brand"><i class="bi bi-bank2"></i> Banco BBVA</span>
             <span class="d-flex align-items-center gap-1">
               <span class="badge rounded-pill">Destino</span>
               <button type="button" class="bank-eye" id="detailCardToggle" title="Mostrar / ocultar número">
@@ -715,8 +737,9 @@ function openDetailModal(tx) {
           <div class="detail-side-amount ${isOut ? 'text-danger' : 'text-success'}">${sign}${currency(tx.amount)}</div>
           <div class="detail-side-badges">
             <span class="d-badge d-badge-secondary"><i class="bi bi-geo-alt"></i>${destCountry}</span>
-            <span class="d-badge ${isOut ? 'd-badge-danger' : 'd-badge-success'}"><i class="bi ${isOut ? 'bi-arrow-up-right' : 'bi-arrow-down-left'}"></i>${isOut ? 'Salida' : 'Entrada'}</span>
-            <span class="d-badge ${pending ? 'd-badge-warning' : 'd-badge-success'}"><i class="bi ${pending ? 'bi-hourglass-split' : 'bi-check-circle'}"></i>${pending ? 'Pendiente' : 'Completado'}</span>
+            ${depositBadge}
+            ${typeBadge}
+            ${estadoBadge}
           </div>
         </div>
       </div>
