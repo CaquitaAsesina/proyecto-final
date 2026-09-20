@@ -504,12 +504,14 @@ body {
   border-left: 3px solid var(--azul);
 }
 
-/* ============ Enlace del número de cuenta ============ */
-.cuenta-num--link {
+/* ============ Enlaces de producto ============ */
+.cuenta-num--link,
+.tarjeta-num--link {
   text-decoration: none;
 }
 
-.cuenta-num--link:hover {
+.cuenta-num--link:hover,
+.tarjeta-num--link:hover {
   text-decoration: underline;
 }
 

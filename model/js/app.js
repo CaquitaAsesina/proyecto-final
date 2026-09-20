@@ -1,7 +1,7 @@
 /* =====================================================
    Banco — app.js
    Módulo Inicio: render de cuentas y tarjetas
-   (los datos viven en js/datos.js)
+   (utilidades de UI en js/ui.js, datos en js/datos.js)
    ===================================================== */
 
 // ---------- Render de CUENTAS ----------
@@ -29,15 +29,16 @@ function renderCuentas() {
               </div>
             </div>
           </td>
-          <td class="saldo">${soles(c.saldoContable)}</td>
-          <td class="saldo">${soles(c.saldoDisponible)}</td>
+          <td class="saldo">${dinero(c.saldoContable, c.moneda)}</td>
+          <td class="saldo">${dinero(c.saldoDisponible, c.moneda)}</td>
         </tr>
       `;
     })
     .join("");
 
-  const totalDisponible = cuentas.reduce((acc, c) => acc + c.saldoDisponible, 0);
-  totalEl.textContent = soles(totalDisponible);
+  totalEl.innerHTML = totalesPorMoneda(cuentas, (c) => c.saldoDisponible)
+    .map((t) => dinero(t.total, t.moneda))
+    .join(" &nbsp;·&nbsp; ");
 }
 
 // ---------- Render de TARJETAS ----------
@@ -54,13 +55,14 @@ function renderTarjetas() {
           <td>
             <div class="fila-producto">
               <div class="producto-info">
-                <span class="tarjeta-num">${t.numero}</span>
+                <a class="tarjeta-num tarjeta-num--link" href="tarjetas.html?tarjeta=${encodeURIComponent(t.numero)}" title="Ver detalle de la tarjeta">${t.numero}</a>
                 <span class="tarjeta-nombre">${t.nombre}</span>
                 <span class="tarjeta-titular">${t.titular}</span>
               </div>
               <div class="quiero-wrap">
                 <button class="btn-quiero" type="button">Quiero</button>
                 <div class="quiero-menu">
+                  <button type="button" data-accion="detalle" data-tarjeta="${t.numero}">Ver detalle</button>
                   <button type="button" data-accion="movimientos">Ver movimientos</button>
                   <button type="button" data-accion="pagar">Pagar tarjeta</button>
                 </div>
@@ -71,12 +73,12 @@ function renderTarjetas() {
             <div class="credito-grid">
               <span class="credito-label">Consumido:</span>
               <span class="credito-label" style="text-align:right;">Disponible:</span>
-              <span class="credito-valor">${soles(t.consumo)}</span>
-              <span class="credito-valor credito-valor--verde">${soles(disponible)}</span>
+              <span class="credito-valor">${dinero(t.consumo, t.moneda)}</span>
+              <span class="credito-valor credito-valor--verde">${dinero(disponible, t.moneda)}</span>
               <div class="barra-credito">
                 <div class="barra-credito__fill" style="width: ${pct}%;"></div>
               </div>
-              <div class="linea-credito">Línea de crédito ${soles(t.lineaCredito)}</div>
+              <div class="linea-credito">Línea de crédito ${dinero(t.lineaCredito, t.moneda)}</div>
             </div>
           </td>
         </tr>
@@ -84,69 +86,40 @@ function renderTarjetas() {
     })
     .join("");
 
-  const totalDisponible = tarjetas.reduce(
-    (acc, t) => acc + (t.lineaCredito - t.consumo),
-    0
-  );
-  totalEl.textContent = soles(totalDisponible);
+  totalEl.innerHTML = totalesPorMoneda(tarjetas, (t) => t.lineaCredito - t.consumo)
+    .map((t) => dinero(t.total, t.moneda))
+    .join(" &nbsp;·&nbsp; ");
 }
 
 // ---------- Acciones del menú "Quiero" ----------
-function ejecutarAccion(accion, cuenta) {
+function ejecutarAccion(accion, origen) {
   if (accion === "detalle" || accion === "saldo") {
-    window.location.href = "cuentas.html" + (cuenta ? "?cuenta=" + encodeURIComponent(cuenta) : "");
+    if (origen.cuenta) {
+      window.location.href = "cuentas.html?cuenta=" + encodeURIComponent(origen.cuenta);
+    } else if (origen.tarjeta) {
+      window.location.href = "tarjetas.html?tarjeta=" + encodeURIComponent(origen.tarjeta);
+    }
   } else {
     alert("Funcionalidad próximamente: " + accion);
   }
-}
-
-// ---------- Dropdown "Quiero" ----------
-function initQuieroMenus() {
-  document.querySelectorAll(".btn-quiero").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const menu = btn.nextElementSibling;
-      document.querySelectorAll(".quiero-menu.is-open").forEach((m) => {
-        if (m !== menu) m.classList.remove("is-open");
-      });
-      menu.classList.toggle("is-open");
-    });
-  });
-
-  // Opciones del menú
-  document.querySelectorAll(".quiero-menu button[data-accion]").forEach((opt) => {
-    opt.addEventListener("click", (e) => {
-      e.stopPropagation();
-      ejecutarAccion(opt.dataset.accion, opt.dataset.cuenta);
-    });
-  });
-
-  // Cerrar al hacer clic fuera
-  document.addEventListener("click", () => {
-    document.querySelectorAll(".quiero-menu.is-open").forEach((m) =>
-      m.classList.remove("is-open")
-    );
-  });
-}
-
-// ---------- Paneles colapsables ----------
-function initPaneles() {
-  document.querySelectorAll("[data-toggle]").forEach((header) => {
-    header.addEventListener("click", () => {
-      const panel = document.getElementById(header.dataset.toggle);
-      panel.classList.toggle("panel--collapsed");
-      header.setAttribute(
-        "aria-expanded",
-        panel.classList.contains("panel--collapsed") ? "false" : "true"
-      );
-    });
-  });
 }
 
 // ---------- Init ----------
 document.addEventListener("DOMContentLoaded", () => {
   renderCuentas();
   renderTarjetas();
+
+  // Opciones del menú "Quiero"
+  document.querySelectorAll(".quiero-menu button[data-accion]").forEach((opt) => {
+    opt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      ejecutarAccion(opt.dataset.accion, {
+        cuenta: opt.dataset.cuenta,
+        tarjeta: opt.dataset.tarjeta,
+      });
+    });
+  });
+
   initQuieroMenus();
   initPaneles();
 });
