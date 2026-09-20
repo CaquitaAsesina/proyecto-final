@@ -37,16 +37,15 @@ function renderCuentas() {
               </div>
             </div>
           </td>
-          <td class="saldo">${dinero(c.saldoContable, c.moneda)}</td>
-          <td class="saldo">${dinero(c.saldoDisponible, c.moneda)}</td>
+          <td class="saldo">${dinero(c.saldoContable)}</td>
+          <td class="saldo">${dinero(c.saldoDisponible)}</td>
         </tr>
       `;
     })
     .join("");
 
-  totalEl.innerHTML = totalesPorMoneda(cuentas, (c) => c.saldoDisponible)
-    .map((t) => dinero(t.total, t.moneda))
-    .join(" &nbsp;·&nbsp; ");
+  const totalDisponible = cuentas.reduce((acc, c) => acc + c.saldoDisponible, 0);
+  totalEl.textContent = dinero(totalDisponible);
 }
 
 // ---------- Render del detalle (pestaña Más información) ----------
@@ -64,11 +63,11 @@ function renderDetalle() {
   detalleEl.innerHTML = `
     <div class="detalle-item detalle-item--full"><dt>Número de cuenta</dt><dd class="cuenta-num">${cuenta.numero}</dd></div>
     <div class="detalle-item"><dt>Nombre</dt><dd>${cuenta.nombre}</dd></div>
-    <div class="detalle-item"><dt>Moneda</dt><dd>${cuenta.moneda}</dd></div>
+    <div class="detalle-item"><dt>Moneda</dt><dd>Soles</dd></div>
     <div class="detalle-item"><dt>Estado</dt><dd>${cuenta.estado}</dd></div>
     <div class="detalle-item"><dt>Fecha de apertura</dt><dd>${cuenta.aperturada}</dd></div>
-    <div class="detalle-item"><dt>Saldo contable</dt><dd class="saldo-importe">${dinero(cuenta.saldoContable, cuenta.moneda)}</dd></div>
-    <div class="detalle-item"><dt>Saldo disponible</dt><dd class="saldo-importe">${dinero(cuenta.saldoDisponible, cuenta.moneda)}</dd></div>
+    <div class="detalle-item"><dt>Saldo contable</dt><dd class="saldo-importe">${dinero(cuenta.saldoContable)}</dd></div>
+    <div class="detalle-item"><dt>Saldo disponible</dt><dd class="saldo-importe">${dinero(cuenta.saldoDisponible)}</dd></div>
   `;
 }
 

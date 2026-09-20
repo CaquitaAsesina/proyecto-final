@@ -577,6 +577,32 @@ body {
   font-size: 26px;
 }
 
+/* ============ Anti-deformación (con Bootstrap grid) ============ */
+/* El contenido fluye dentro de la columna Bootstrap sin desbordar la pantalla */
+.main .row > .col-12 {
+  min-width: 0;
+}
+
+/* Imágenes y barras nunca fuerzan el ancho del contenedor */
+img,
+svg,
+.barra-credito {
+  max-width: 100%;
+}
+
+/* Números de cuenta/tarjeta largos: se parten en pantallas angostas
+   (en desktop caben de todas formas, así que no cambia nada) */
+.cuenta-num,
+.tarjeta-num {
+  overflow-wrap: anywhere;
+}
+
+/* Min-width 0 para celdas flexibles de tablas dentro de wrappers */
+.tabla td,
+.tabla th {
+  min-width: 0;
+}
+
 /* ============ Responsive ============ */
 @media (max-width: 720px) {
   .topbar__inner {
@@ -635,5 +661,19 @@ body {
   .detalle-item {
     grid-template-columns: 1fr;
     gap: 2px;
+  }
+
+  .ocultar-label {
+    font-size: 16px;
+  }
+
+  .switch__opt {
+    padding: 8px 16px;
+  }
+
+  .info-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
   }
 }

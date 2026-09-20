@@ -29,16 +29,15 @@ function renderCuentas() {
               </div>
             </div>
           </td>
-          <td class="saldo">${dinero(c.saldoContable, c.moneda)}</td>
-          <td class="saldo">${dinero(c.saldoDisponible, c.moneda)}</td>
+          <td class="saldo">${dinero(c.saldoContable)}</td>
+          <td class="saldo">${dinero(c.saldoDisponible)}</td>
         </tr>
       `;
     })
     .join("");
 
-  totalEl.innerHTML = totalesPorMoneda(cuentas, (c) => c.saldoDisponible)
-    .map((t) => dinero(t.total, t.moneda))
-    .join(" &nbsp;·&nbsp; ");
+  const totalDisponible = cuentas.reduce((acc, c) => acc + c.saldoDisponible, 0);
+  totalEl.textContent = dinero(totalDisponible);
 }
 
 // ---------- Render de TARJETAS ----------
@@ -73,12 +72,12 @@ function renderTarjetas() {
             <div class="credito-grid">
               <span class="credito-label">Consumido:</span>
               <span class="credito-label" style="text-align:right;">Disponible:</span>
-              <span class="credito-valor">${dinero(t.consumo, t.moneda)}</span>
-              <span class="credito-valor credito-valor--verde">${dinero(disponible, t.moneda)}</span>
+              <span class="credito-valor">${dinero(t.consumo)}</span>
+              <span class="credito-valor credito-valor--verde">${dinero(disponible)}</span>
               <div class="barra-credito">
                 <div class="barra-credito__fill" style="width: ${pct}%;"></div>
               </div>
-              <div class="linea-credito">Línea de crédito ${dinero(t.lineaCredito, t.moneda)}</div>
+              <div class="linea-credito">Línea de crédito ${dinero(t.lineaCredito)}</div>
             </div>
           </td>
         </tr>
@@ -86,9 +85,11 @@ function renderTarjetas() {
     })
     .join("");
 
-  totalEl.innerHTML = totalesPorMoneda(tarjetas, (t) => t.lineaCredito - t.consumo)
-    .map((t) => dinero(t.total, t.moneda))
-    .join(" &nbsp;·&nbsp; ");
+  const totalCredito = tarjetas.reduce(
+    (acc, t) => acc + (t.lineaCredito - t.consumo),
+    0
+  );
+  totalEl.textContent = dinero(totalCredito);
 }
 
 // ---------- Acciones del menú "Quiero" ----------

@@ -44,12 +44,12 @@ function renderTarjetas() {
             <div class="credito-grid">
               <span class="credito-label">Consumido:</span>
               <span class="credito-label" style="text-align:right;">Disponible:</span>
-              <span class="credito-valor">${dinero(t.consumo, t.moneda)}</span>
-              <span class="credito-valor credito-valor--verde">${dinero(disponible, t.moneda)}</span>
+              <span class="credito-valor">${dinero(t.consumo)}</span>
+              <span class="credito-valor credito-valor--verde">${dinero(disponible)}</span>
               <div class="barra-credito">
                 <div class="barra-credito__fill" style="width: ${pct}%;"></div>
               </div>
-              <div class="linea-credito">Línea de crédito ${dinero(t.lineaCredito, t.moneda)}</div>
+              <div class="linea-credito">Línea de crédito ${dinero(t.lineaCredito)}</div>
             </div>
           </td>
         </tr>
@@ -57,9 +57,11 @@ function renderTarjetas() {
     })
     .join("");
 
-  totalEl.innerHTML = totalesPorMoneda(tarjetas, (t) => t.lineaCredito - t.consumo)
-    .map((t) => dinero(t.total, t.moneda))
-    .join(" &nbsp;·&nbsp; ");
+  const totalCredito = tarjetas.reduce(
+    (acc, t) => acc + (t.lineaCredito - t.consumo),
+    0
+  );
+  totalEl.textContent = dinero(totalCredito);
 }
 
 // ---------- Render del detalle (pestaña Más información) ----------
@@ -83,9 +85,9 @@ function renderDetalle() {
     <div class="detalle-item"><dt>Titular</dt><dd>${tarjeta.titular}</dd></div>
     <div class="detalle-item"><dt>Estado</dt><dd>${tarjeta.estado}</dd></div>
     <div class="detalle-item"><dt>Fecha de emisión</dt><dd>${tarjeta.emision}</dd></div>
-    <div class="detalle-item"><dt>Línea de crédito</dt><dd class="saldo-importe">${dinero(tarjeta.lineaCredito, tarjeta.moneda)}</dd></div>
-    <div class="detalle-item"><dt>Crédito consumido</dt><dd class="saldo-importe">${dinero(tarjeta.consumo, tarjeta.moneda)}</dd></div>
-    <div class="detalle-item"><dt>Crédito disponible</dt><dd class="saldo-importe">${dinero(disponible, tarjeta.moneda)}</dd></div>
+    <div class="detalle-item"><dt>Línea de crédito</dt><dd class="saldo-importe">${dinero(tarjeta.lineaCredito)}</dd></div>
+    <div class="detalle-item"><dt>Crédito consumido</dt><dd class="saldo-importe">${dinero(tarjeta.consumo)}</dd></div>
+    <div class="detalle-item"><dt>Crédito disponible</dt><dd class="saldo-importe">${dinero(disponible)}</dd></div>
     <div class="detalle-item detalle-item--full">
       <dt>Uso de la línea</dt>
       <dd>

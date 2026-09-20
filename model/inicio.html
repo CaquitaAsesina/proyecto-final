@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Banco — Inicio</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -22,6 +23,8 @@
   </header>
 
   <main class="main">
+    <div class="row g-0">
+      <div class="col-12">
     <!-- ============ CUENTAS ============ -->
     <section class="panel" id="panel-cuentas">
       <button class="panel__header" type="button" data-toggle="panel-cuentas" aria-expanded="true">
@@ -30,6 +33,7 @@
       </button>
 
       <div class="panel__body" id="panel-cuentas-body">
+        <div class="table-responsive">
         <table class="tabla tabla--cuentas">
           <thead>
             <tr>
@@ -40,6 +44,7 @@
           </thead>
           <tbody id="cuentas-tbody"><!-- Renderizado por JS --></tbody>
         </table>
+        </div>
         <div class="total-row">
           <span class="total-row__label">Saldo disponible total</span>
           <span class="total-row__value" id="cuentas-total">S/ 0.00</span>
@@ -55,6 +60,7 @@
       </button>
 
       <div class="panel__body" id="panel-tarjetas-body">
+        <div class="table-responsive">
         <table class="tabla tabla--tarjetas">
           <thead>
             <tr>
@@ -64,12 +70,15 @@
           </thead>
           <tbody id="tarjetas-tbody"><!-- Renderizado por JS --></tbody>
         </table>
+        </div>
         <div class="total-row">
           <span class="total-row__label">Crédito disponible total</span>
           <span class="total-row__value" id="tarjetas-total">S/ 0.00</span>
         </div>
       </div>
     </section>
+      </div>
+    </div>
   </main>
 
   <script src="js/datos.js"></script>
