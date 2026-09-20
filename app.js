@@ -415,7 +415,6 @@ function renderClient() {
   document.getElementById('avatar').textContent = initials;
   document.getElementById('ddAvatar').textContent = initials;
   document.getElementById('ddName').textContent = `${client.firstName} ${client.lastName}`;
-  document.getElementById('heroAvatar').textContent = initials;
   document.getElementById('heroName').textContent = `${client.firstName} ${client.lastName}`;
   document.getElementById('heroEmail').textContent = client.email;
   document.getElementById('heroPhone').textContent = client.phone;
@@ -454,7 +453,7 @@ function renderAccounts() {
           <span class="chip"></span>
           <i class="bi bi-wifi contactless" aria-hidden="true"></i>
         </div>
-        <div class="bank-number">••••&nbsp;&nbsp;••••&nbsp;&nbsp;••••&nbsp;&nbsp;${last4}</div>
+        <div class="bank-number" data-account="${acc.account}">••••&nbsp;&nbsp;••••&nbsp;&nbsp;••••&nbsp;&nbsp;${last4}</div>
         <div class="d-flex justify-content-between align-items-end">
           <div>
             <small class="d-block opacity-75 bank-label">TITULAR</small>
@@ -469,8 +468,11 @@ function renderAccounts() {
       <div class="d-flex align-items-center gap-2 bank-card-footer">
         <div class="lh-sm flex-grow-1">
           <small class="text-body-secondary d-block">No. ${acc.account}</small>
-          <span class="small fw-semibold">${state.balanceVisible ? currency(acc.balance) : '••••••'}</span>
+          <span class="small fw-semibold card-balance" data-account="${acc.account}">${state.balanceVisible ? currency(acc.balance) : '••••••'}</span>
         </div>
+        <button class="btn btn-sm btn-outline-secondary bank-eye-toggle" data-account="${acc.account}" title="Ver datos">
+          <i class="bi bi-eye"></i>
+        </button>
         <button class="btn btn-sm btn-outline-primary fw-semibold select-account" data-account="${acc.account}">
           <i class="bi bi-send me-1"></i>Transferir
         </button>
@@ -482,6 +484,29 @@ function renderAccounts() {
   Array.from(container.querySelectorAll('.select-account')).forEach(btn => {
     btn.addEventListener('click', () => {
       openTransferModal(btn.dataset.account);
+    });
+  });
+
+  container.querySelectorAll('.bank-eye-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const acc = btn.dataset.account;
+      const client = getCurrentClient();
+      const account = client.accounts.find(a => a.account === acc);
+      if (!account) return;
+      const numEl = container.querySelector(`.bank-number[data-account="${acc}"]`);
+      const balEl = container.querySelector(`.card-balance[data-account="${acc}"]`);
+      const icon = btn.querySelector('i');
+      const isActive = btn.classList.toggle('active');
+      if (isActive) {
+        const n = account.account;
+        numEl.textContent = n.slice(0,4) + '  ' + n.slice(4,8) + '  ' + n.slice(8,12) + '  ' + n.slice(12);
+        balEl.textContent = currency(account.balance);
+        icon.className = 'bi bi-eye-slash';
+      } else {
+        numEl.innerHTML = '••••&nbsp;&nbsp;••••&nbsp;&nbsp;••••&nbsp;&nbsp;' + account.account.slice(-4);
+        balEl.textContent = '••••••';
+        icon.className = 'bi bi-eye';
+      }
     });
   });
 }
