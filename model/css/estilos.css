@@ -623,21 +623,100 @@ svg,
     padding: 12px 16px;
   }
 
-  .tabla th,
-  .tabla td {
-    padding: 10px 8px;
+  .main {
+    padding: 16px 12px 48px;
   }
 
+  .tabla th,
+  .tabla td {
+    padding: 10px 6px;
+  }
+
+  .panel__header {
+    padding: 12px 14px;
+  }
+
+  .panel__title {
+    font-size: 18px;
+  }
+
+  /* Importes y números siempre en una sola línea (como referencia móvil) */
+  .saldo {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .cuenta-num,
+  .tarjeta-num {
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .cuenta-nombre,
+  .tarjeta-nombre,
+  .tarjeta-titular {
+    font-size: 12px;
+  }
+
+  /* Info del producto arriba, botón Quiero compacto debajo */
+  .fila-producto {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .producto-info {
+    flex: none;
+  }
+
+  .btn-quiero {
+    padding: 7px 16px;
+    font-size: 12px;
+    min-width: 92px;
+  }
+
+  .quiero-menu {
+    min-width: 150px;
+  }
+
+  /* Crédito de tarjetas: consumido y disponible lado a lado */
   .credito-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    gap: 2px 12px;
+  }
+
+  .credito-label {
+    font-size: 13px;
+  }
+
+  .credito-valor {
+    font-size: 14px;
+    white-space: nowrap;
   }
 
   .credito-valor--verde {
-    text-align: left;
+    text-align: right;
+  }
+
+  .linea-credito {
+    font-size: 12px;
+  }
+
+  /* Total centrado como en la referencia móvil */
+  .total-row {
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 10px;
+  }
+
+  .total-row__label {
+    font-size: 15px;
   }
 
   .total-row__value {
     font-size: 20px;
+    white-space: nowrap;
   }
 
   .modulo-head {
@@ -675,5 +754,15 @@ svg,
     width: 14px;
     height: 14px;
     font-size: 9px;
+  }
+}
+
+/* Pantallas muy angostas: números un poco más pequeños para que todo quepa */
+@media (max-width: 360px) {
+  .saldo,
+  .credito-valor,
+  .cuenta-num,
+  .tarjeta-num {
+    font-size: 12.5px;
   }
 }
