@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Inicio</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="inicio.html">
+        <span class="brand__logo">B</span>
+        <span class="brand__name">Banco</span>
+      </a>
+      <nav class="menu">
+        <a href="inicio.html" class="menu__link is-active">Inicio</a>
+        <a href="cuentas.html" class="menu__link">Cuentas</a>
+        <a href="#" class="menu__link is-disabled" title="Módulo no disponible">Módulo 3</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- ============ CUENTAS ============ -->
+    <section class="panel" id="panel-cuentas">
+      <button class="panel__header" type="button" data-toggle="panel-cuentas" aria-expanded="true">
+        <h2 class="panel__title">Cuentas</h2>
+        <span class="panel__arrow" aria-hidden="true">▲</span>
+      </button>
+
+      <div class="panel__body" id="panel-cuentas-body">
+        <table class="tabla tabla--cuentas">
+          <thead>
+            <tr>
+              <th class="col-tipo">Tipo y número de cuenta</th>
+              <th class="col-saldo-contable">Saldo contable <span class="info-icon" title="Incluye fondos retenidos o pendientes de compensación.">i</span></th>
+              <th class="col-saldo-disponible">Saldo disponible</th>
+            </tr>
+          </thead>
+          <tbody id="cuentas-tbody"><!-- Renderizado por JS --></tbody>
+        </table>
+        <div class="total-row">
+          <span class="total-row__label">Saldo disponible total</span>
+          <span class="total-row__value" id="cuentas-total">S/ 0.00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TARJETAS ============ -->
+    <section class="panel" id="panel-tarjetas">
+      <button class="panel__header" type="button" data-toggle="panel-tarjetas" aria-expanded="true">
+        <h2 class="panel__title">Tarjetas</h2>
+        <span class="panel__arrow" aria-hidden="true">▲</span>
+      </button>
+
+      <div class="panel__body" id="panel-tarjetas-body">
+        <table class="tabla tabla--tarjetas">
+          <thead>
+            <tr>
+              <th class="col-tipo">Tipo y número de tarjeta</th>
+              <th class="col-credito">Crédito consumido y crédito disponible</th>
+            </tr>
+          </thead>
+          <tbody id="tarjetas-tbody"><!-- Renderizado por JS --></tbody>
+        </table>
+        <div class="total-row">
+          <span class="total-row__label">Crédito disponible total</span>
+          <span class="total-row__value" id="tarjetas-total">S/ 0.00</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

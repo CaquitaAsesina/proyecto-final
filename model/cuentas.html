@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Cuentas</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <a class="brand" href="inicio.html">
+        <span class="brand__logo">B</span>
+        <span class="brand__name">Banco</span>
+      </a>
+      <nav class="menu">
+        <a href="inicio.html" class="menu__link">Inicio</a>
+        <a href="cuentas.html" class="menu__link is-active">Cuentas</a>
+        <a href="#" class="menu__link is-disabled" title="Módulo no disponible">Módulo 3</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main">
+    <!-- ============ Título + pestañas ============ -->
+    <div class="modulo-head">
+      <h1 class="modulo-title">Cuentas</h1>
+      <div class="tabs" role="tablist">
+        <button class="tabs__tab is-active" type="button" role="tab" data-tab="mis-productos">Mis productos</button>
+        <button class="tabs__tab" type="button" role="tab" data-tab="mas-informacion">Más información</button>
+      </div>
+    </div>
+    <div class="modulo-linea"></div>
+
+    <!-- ============ Toggle Ocultar importes ============ -->
+    <div class="ocultar-row">
+      <span class="ocultar-label">Ocultar importes <span class="info-icon" title="Al activarlo, los importes se muestran como asteriscos.">i</span></span>
+      <div class="switch" id="switch-ocultar" role="switch" aria-checked="false" tabindex="0">
+        <span class="switch__opt switch__opt--off is-on">OFF</span>
+        <span class="switch__opt switch__opt--on">ON</span>
+      </div>
+    </div>
+
+    <!-- ============ Panel Mis productos ============ -->
+    <section class="tab-panel is-active" id="tab-mis-productos">
+      <section class="panel" id="panel-cuentas">
+        <button class="panel__header" type="button" data-toggle="panel-cuentas" aria-expanded="true">
+          <h2 class="panel__title">Cuentas</h2>
+          <span class="panel__arrow" aria-hidden="true">▲</span>
+        </button>
+
+        <div class="panel__body" id="panel-cuentas-body">
+          <table class="tabla tabla--cuentas">
+            <thead>
+              <tr>
+                <th class="col-tipo">Tipo y número de cuenta</th>
+                <th class="col-saldo-contable">Saldo contable <span class="info-icon" title="Incluye fondos retenidos o pendientes de compensación.">i</span></th>
+                <th class="col-saldo-disponible">Saldo disponible</th>
+              </tr>
+            </thead>
+            <tbody id="cuentas-tbody"><!-- Renderizado por JS --></tbody>
+          </table>
+          <div class="total-row">
+            <span class="total-row__label">Saldo disponible total</span>
+            <span class="total-row__value" id="cuentas-total">S/ 0.00</span>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ Panel Más información ============ -->
+    <section class="tab-panel" id="tab-mas-informacion">
+      <section class="panel">
+        <div class="panel__header panel__header--static">
+          <h2 class="panel__title">Detalle de la cuenta</h2>
+        </div>
+        <div class="panel__body">
+          <dl class="detalle-lista" id="cuenta-detalle"><!-- Renderizado por JS --></dl>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/cuentas.js"></script>
+</body>
+</html>

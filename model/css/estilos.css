@@ -1,0 +1,637 @@
+/* ============ Base ============ */
+:root {
+  --azul: #0b62a4;
+  --azul-oscuro: #083b63;
+  --azul-fondo: #005a9c;
+  --gris-fondo: #eef1f4;
+  --gris-borde: #d5dbe0;
+  --gris-header: #f4f6f7;
+  --texto: #333;
+  --verde: #7bb800;
+  --blanco: #fff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--texto);
+  background: var(--blanco);
+  padding-top: 56px; /* espacio del menú fijo */
+}
+
+/* ============ Menú fijo horizontal superior ============ */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--azul-oscuro);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+}
+
+.topbar__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--blanco);
+}
+
+.brand__logo {
+  width: 30px;
+  height: 30px;
+  background: var(--blanco);
+  color: var(--azul-oscuro);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.brand__name {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.menu {
+  display: flex;
+  height: 100%;
+}
+
+.menu__link {
+  display: flex;
+  align-items: center;
+  padding: 0 26px;
+  color: #cfe0ee;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 3px solid transparent;
+  transition: background 0.15s, color 0.15s;
+}
+
+.menu__link:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--blanco);
+}
+
+.menu__link.is-active {
+  background: rgba(255, 255, 255, 0.09);
+  color: var(--blanco);
+  border-bottom-color: #4da3e0;
+  font-weight: 600;
+}
+
+.menu__link.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ============ Layout principal ============ */
+.main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* ============ Paneles (Cuentas / Tarjetas) ============ */
+.panel {
+  border: 1px solid var(--gris-borde);
+  border-radius: 4px;
+  margin-bottom: 28px;
+  background: var(--blanco);
+}
+
+.panel__header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gris-header);
+  border: none;
+  border-bottom: 1px solid var(--gris-borde);
+  padding: 16px 22px;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.panel__title {
+  margin: 0;
+  font-size: 22px;
+  color: #4a4a4a;
+  font-weight: 600;
+}
+
+.panel__arrow {
+  color: var(--azul);
+  font-size: 16px;
+  transition: transform 0.25s;
+}
+
+.panel--collapsed .panel__arrow {
+  transform: rotate(180deg);
+}
+
+.panel--collapsed .panel__body {
+  display: none;
+}
+
+.panel__header--static {
+  cursor: default;
+}
+
+.panel__header--static:hover {
+  background: var(--gris-header);
+}
+
+.panel__body {
+  overflow: hidden;
+}
+
+/* ============ Tablas ============ */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla th {
+  background: var(--gris-header);
+  border: 1px solid var(--gris-borde);
+  border-left: none;
+  border-right: none;
+  padding: 14px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.tabla td {
+  border-top: 1px solid var(--gris-borde);
+  padding: 18px 16px;
+  vertical-align: middle;
+}
+
+.tabla tbody tr {
+  border-bottom: 4px solid var(--gris-fondo);
+}
+
+/* Columnas cuentas */
+.tabla--cuentas th:nth-child(1),
+.tabla--cuentas td:nth-child(1) {
+  width: 40%;
+}
+
+.col-saldo-contable,
+.col-saldo-disponible {
+  width: 30%;
+}
+
+/* ============ Fila de producto (info + botón Quiero) ============ */
+.fila-producto {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+}
+
+.producto-info {
+  flex: 1 1 180px;
+  min-width: 0;
+}
+
+/* ============ Celdas de cuentas ============ */
+.cuenta-num {
+  color: var(--azul);
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+}
+
+.cuenta-nombre {
+  color: #555;
+  font-size: 14px;
+  display: block;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.saldo {
+  text-align: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: #444;
+}
+
+/* ============ Botón "Quiero" ============ */
+.btn-quiero {
+  background: var(--azul-fondo);
+  color: var(--blanco);
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 110px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn-quiero::after {
+  content: "▾";
+  font-size: 11px;
+}
+
+.btn-quiero:hover {
+  background: var(--azul);
+}
+
+/* ============ Dropdown del botón Quiero ============ */
+.quiero-wrap {
+  position: relative;
+  display: inline-block;
+}
+
+.quiero-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--blanco);
+  border: 1px solid var(--gris-borde);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 190px;
+  z-index: 50;
+  display: none;
+}
+
+.quiero-menu.is-open {
+  display: block;
+}
+
+.quiero-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  font-size: 13px;
+  color: var(--texto);
+  cursor: pointer;
+}
+
+.quiero-menu button:hover {
+  background: var(--gris-header);
+  color: var(--azul);
+}
+
+/* ============ Icono info ============ */
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #7a8ba0;
+  border-radius: 50%;
+  color: #7a8ba0;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  vertical-align: middle;
+  margin-left: 4px;
+  cursor: help;
+}
+
+/* ============ Tarjetas ============ */
+.tabla--tarjetas th:nth-child(1),
+.tabla--tarjetas td:nth-child(1) {
+  width: 35%;
+}
+
+.col-credito {
+  width: 65%;
+}
+
+.tarjeta-num {
+  color: var(--azul);
+  font-weight: 700;
+  font-size: 16px;
+  display: block;
+}
+
+.tarjeta-nombre,
+.tarjeta-titular {
+  color: #555;
+  font-size: 14px;
+  display: block;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+
+.credito-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 24px;
+  padding: 0 10px;
+}
+
+.credito-label {
+  font-size: 16px;
+  color: #444;
+}
+
+.credito-valor {
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--azul);
+}
+
+.credito-valor--verde {
+  color: var(--verde);
+  text-align: right;
+}
+
+.barra-credito {
+  grid-column: 1 / -1;
+  height: 12px;
+  background: var(--gris-fondo);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.barra-credito__fill {
+  height: 100%;
+  background: var(--azul-fondo);
+}
+
+.linea-credito {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 16px;
+  color: #444;
+  margin-top: 6px;
+}
+
+/* ============ Módulo: título + pestañas ============ */
+.modulo-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 32px;
+}
+
+.modulo-title {
+  color: var(--azul);
+  font-weight: 400;
+  font-size: 42px;
+  margin: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+}
+
+.tabs__tab {
+  padding: 14px 30px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #9aa6ae;
+  background: var(--gris-header);
+  border: 1px solid var(--gris-borde);
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.tabs__tab:hover {
+  color: var(--azul);
+}
+
+.tabs__tab.is-active {
+  background: var(--blanco);
+  color: var(--azul);
+  border-color: var(--gris-borde);
+}
+
+.modulo-linea {
+  height: 1px;
+  background: var(--gris-borde);
+  margin: 0 0 22px;
+}
+
+/* ============ Paneles de pestañas ============ */
+.tab-panel {
+  display: none;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+/* ============ Toggle Ocultar importes ============ */
+.ocultar-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.ocultar-label {
+  font-size: 19px;
+  color: #444;
+}
+
+.switch {
+  display: inline-flex;
+  border: 1px solid var(--gris-borde);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+}
+
+.switch__opt {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--azul);
+  background: var(--blanco);
+  transition: background 0.15s, color 0.15s;
+}
+
+.switch__opt--off {
+  border-right: 1px solid var(--gris-borde);
+}
+
+.switch__opt.is-on {
+  background: var(--azul-fondo);
+  color: var(--blanco);
+}
+
+/* ============ Fila resaltada (cuenta seleccionada) ============ */
+.fila-resaltada > td {
+  background: #eaf3fb;
+}
+
+.fila-resaltada > td:first-child {
+  border-left: 3px solid var(--azul);
+}
+
+/* ============ Enlace del número de cuenta ============ */
+.cuenta-num--link {
+  text-decoration: none;
+}
+
+.cuenta-num--link:hover {
+  text-decoration: underline;
+}
+
+/* ============ Detalle (pestaña Más información) ============ */
+.detalle-lista {
+  margin: 0;
+  padding: 8px 22px 18px;
+}
+
+.detalle-item {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gris-fondo);
+}
+
+.detalle-item--full {
+  grid-template-columns: 220px 1fr;
+}
+
+.detalle-item dt {
+  color: #8a959e;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.detalle-item dd {
+  margin: 0;
+  font-size: 15px;
+  color: var(--texto);
+}
+
+.detalle-item dd.saldo-importe {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.detalle-vacio {
+  color: #8a959e;
+  font-size: 15px;
+  padding: 12px 0;
+}
+
+/* ============ Fila de totales ============ */
+.total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: baseline;
+  gap: 18px;
+  padding: 18px 22px;
+  border-top: 4px solid var(--gris-fondo);
+}
+
+.total-row__label {
+  color: #8a959e;
+  font-size: 18px;
+}
+
+.total-row__value {
+  color: var(--azul);
+  font-weight: 700;
+  font-size: 26px;
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 720px) {
+  .topbar__inner {
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+  }
+
+  .topbar {
+    height: auto;
+  }
+
+  .brand {
+    display: none;
+  }
+
+  .menu__link {
+    padding: 12px 16px;
+  }
+
+  .tabla th,
+  .tabla td {
+    padding: 10px 8px;
+  }
+
+  .credito-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .credito-valor--verde {
+    text-align: left;
+  }
+
+  .total-row__value {
+    font-size: 20px;
+  }
+
+  .modulo-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modulo-title {
+    font-size: 32px;
+  }
+
+  .tabs__tab {
+    flex: 1;
+    padding: 12px 10px;
+  }
+
+  .ocultar-row {
+    justify-content: flex-start;
+  }
+
+  .detalle-item {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
