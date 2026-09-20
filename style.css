@@ -177,7 +177,8 @@ body[data-bs-theme='dark'] .btn-light {
 }
 
 .client-name-card .fotocheck-lg {
-  width: 170px;
+  width: 217.5px;
+  height: 100%;
   background: linear-gradient(135deg, rgba(13, 110, 253, 0.08), rgba(102, 16, 242, 0.1));
   border-right: 1.5px dashed var(--bs-primary);
   font-size: 0.8rem;
@@ -189,7 +190,25 @@ body[data-bs-theme='dark'] .btn-light {
 }
 
 .client-name-card .fotocheck-lg i {
-  font-size: 4rem;
+  font-size: 6rem;
+  margin-bottom: 0.3rem;
+}
+
+/* Fotocheck logo derecho (crear cuenta) */
+.fotocheck-logo {
+  width: 217.5px;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(13,110,253,0.08), rgba(102,16,242,0.1));
+  border-left: 1.5px dashed var(--bs-primary);
+  font-size: 0.8rem;
+  color: var(--bs-primary);
+  line-height: 1.1;
+  padding: 0.5rem;
+  border-top-right-radius: 0.9rem;
+  border-bottom-right-radius: 0.9rem;
+}
+.fotocheck-logo i {
+  font-size: 6rem;
   margin-bottom: 0.3rem;
 }
 
@@ -863,4 +882,10 @@ tbody tr:nth-child(n+11) { animation-delay: 0.4s; }
 
 .ls-tight {
   letter-spacing: -0.03em;
+}
+
+/* ---- Altura igual en columna cliente + crear cuenta ---- */
+.equal-height-cards > .card {
+  flex: 1 1 0;
+  min-height: 0;
 }
