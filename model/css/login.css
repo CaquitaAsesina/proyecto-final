@@ -1,0 +1,430 @@
+/* =====================================================
+   Banco — login.css
+   Estilos de la página de acceso (login)
+   ===================================================== */
+
+.login-body {
+  background: #f4f6f8;
+  padding-top: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ============ Header blanco ============ */
+.lg-header {
+  background: var(--blanco);
+  border-radius: 0 0 18px 18px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 34px 56px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.lg-logo {
+  color: var(--azul);
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.lg-header__link {
+  color: var(--azul);
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.lg-header__link:hover {
+  text-decoration: underline;
+}
+
+/* ============ Contenido ============ */
+.lg-main {
+  flex: 1;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 30px 24px 60px;
+}
+
+.lg-card {
+  background: var(--blanco);
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+/* --- Tarjeta del formulario --- */
+.lg-card--form {
+  padding: 48px 56px 56px;
+}
+
+.lg-hola {
+  color: #071146;
+  font-size: 52px;
+  font-weight: 800;
+  margin: 0 0 18px;
+}
+
+.lg-subtitulo {
+  color: #12124b;
+  font-size: 21px;
+  margin: 0 0 34px;
+}
+
+/* --- Campos --- */
+.lg-campo {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.lg-label {
+  display: block;
+  color: #666a6d;
+  font-size: 13px;
+  margin: 0 0 2px 16px;
+}
+
+.lg-input,
+.lg-select {
+  width: 100%;
+  background: #fafbfc;
+  border: 1px solid #979b9e;
+  border-radius: 8px;
+  color: #333;
+  font-size: 17px;
+  font-family: inherit;
+  padding: 20px 16px;
+  outline: none;
+}
+
+.lg-select {
+  appearance: none;
+  cursor: pointer;
+  padding-top: 30px;
+  padding-bottom: 12px;
+}
+
+.lg-input:focus,
+.lg-select:focus {
+  border-color: var(--azul);
+  box-shadow: 0 0 0 2px rgba(11, 98, 164, 0.15);
+}
+
+.lg-input::placeholder {
+  color: #6a6f73;
+}
+
+.lg-campo--select .lg-chevron {
+  color: var(--azul-oscuro);
+  font-size: 22px;
+  line-height: 1;
+  pointer-events: none;
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-38%);
+}
+
+.lg-campo--pass .lg-input {
+  padding-right: 56px;
+}
+
+.lg-ojo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* --- Recordar documento --- */
+.lg-recordar {
+  background: #f6f8fb;
+  border: 1px solid #e3e9f2;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+  padding: 18px 16px;
+}
+
+.lg-check {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+}
+
+.lg-check input {
+  display: none;
+}
+
+.lg-check__caja {
+  background: var(--blanco);
+  border: 2px solid #12124b;
+  border-radius: 8px;
+  display: inline-flex;
+  height: 30px;
+  width: 30px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.lg-check input:checked + .lg-check__caja::after {
+  color: #12124b;
+  content: "✔";
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.lg-check__texto {
+  color: #12124b;
+  font-size: 17px;
+}
+
+.lg-help {
+  align-items: center;
+  border: 2px solid #12124b;
+  border-radius: 50%;
+  color: #12124b;
+  cursor: help;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 700;
+  height: 22px;
+  justify-content: center;
+  width: 22px;
+}
+
+/* --- Error --- */
+.lg-error {
+  background: #fdecea;
+  border: 1px solid #f5c6c2;
+  border-radius: 6px;
+  color: #b3261e;
+  font-size: 14px;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+}
+
+/* --- Hint de usuarios demo --- */
+.lg-demo {
+  background: #eef4fb;
+  border: 1px dashed #b9d2ea;
+  border-radius: 6px;
+  color: #4a5568;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+}
+
+.lg-demo strong {
+  color: var(--azul);
+}
+
+/* --- Enlace contraseña --- */
+.lg-enlace {
+  color: var(--azul);
+  display: inline-block;
+  font-size: 17px;
+  margin: 4px 0 30px;
+  text-decoration: none;
+}
+
+.lg-enlace:hover {
+  text-decoration: underline;
+}
+
+/* --- Botones --- */
+.lg-botones {
+  display: flex;
+  gap: 20px;
+}
+
+.lg-btn {
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 600;
+  padding: 16px 34px;
+  transition: background 0.15s;
+}
+
+.lg-btn--primario {
+  background: #001b71;
+  color: var(--blanco);
+}
+
+.lg-btn--primario:hover {
+  background: #0a2a8f;
+}
+
+.lg-btn--secundario {
+  background: #f0f1f3;
+  color: #333;
+}
+
+.lg-btn--secundario:hover {
+  background: #e4e6ea;
+}
+
+.lg-btn--enlace {
+  align-items: center;
+  box-sizing: border-box;
+  display: inline-flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* --- Tarjeta promocional --- */
+.lg-card--promo {
+  padding: 46px 44px;
+  position: relative;
+}
+
+.lg-promo__top {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.lg-promo__cel {
+  font-size: 110px;
+  line-height: 1;
+  transform: rotate(-14deg);
+}
+
+.lg-promo__nuevo {
+  background: #ffd438;
+  border-radius: 50%;
+  color: #12124b;
+  font-size: 17px;
+  font-weight: 600;
+  height: 84px;
+  width: 84px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lg-promo__titulo {
+  color: #071146;
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 20px;
+}
+
+.lg-promo__texto {
+  color: #333;
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 0 28px;
+}
+
+.lg-promo__btn {
+  width: auto;
+}
+
+/* ============ Footer ============ */
+.lg-footer {
+  background: #001b71;
+  border-radius: 24px 24px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding: 44px 56px;
+}
+
+.lg-footer__logo {
+  color: var(--blanco);
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.lg-footer__social {
+  display: flex;
+  gap: 14px;
+}
+
+.lg-red {
+  align-items: center;
+  background: #7fb3e3;
+  border-radius: 50%;
+  color: #001b71;
+  display: flex;
+  font-size: 14px;
+  font-weight: 700;
+  height: 34px;
+  justify-content: center;
+  text-decoration: none;
+  width: 34px;
+}
+
+.lg-red:hover {
+  background: var(--blanco);
+}
+
+/* ============ Responsive ============ */
+@media (max-width: 991px) {
+  .lg-header {
+    padding: 20px 24px;
+  }
+
+  .lg-logo {
+    font-size: 26px;
+  }
+
+  .lg-main {
+    padding: 20px 16px 40px;
+  }
+
+  .lg-card--form {
+    padding: 30px 22px 36px;
+  }
+
+  .lg-hola {
+    font-size: 40px;
+  }
+
+  .lg-subtitulo {
+    font-size: 17px;
+  }
+
+  .lg-promo__titulo {
+    font-size: 28px;
+  }
+
+  .lg-promo__cel {
+    font-size: 80px;
+  }
+
+  .lg-promo__nuevo {
+    height: 68px;
+    width: 68px;
+    font-size: 15px;
+  }
+
+  .lg-footer {
+    flex-direction: column;
+    gap: 18px;
+    padding: 30px 24px;
+  }
+}

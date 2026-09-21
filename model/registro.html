@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Registro</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-body">
+  <!-- ============ Header blanco ============ -->
+  <header class="lg-header">
+    <a class="lg-logo" href="login.html">BANCO</a>
+    <a href="login.html" class="lg-header__link">Ya tengo cuenta</a>
+  </header>
+
+  <!-- ============ Contenido ============ -->
+  <main class="lg-main">
+    <div class="row g-4">
+      <!-- Tarjeta del formulario -->
+      <div class="col-12 col-lg-7">
+        <section class="lg-card lg-card--form">
+          <h1 class="lg-hola">Regístrate</h1>
+          <p class="lg-subtitulo">Crea tu Banca por Internet en un minuto</p>
+
+          <form id="registro-form" novalidate>
+            <!-- Nombres -->
+            <div class="lg-campo">
+              <input id="reg-nombres" class="lg-input" type="text" placeholder="Nombres completos" autocomplete="off">
+            </div>
+
+            <!-- País -->
+            <div class="lg-campo lg-campo--select">
+              <label class="lg-label" for="reg-pais">País</label>
+              <select id="reg-pais" class="lg-select">
+                <option value="" selected>Selecciona tu país</option>
+                <option value="Perú">Perú</option>
+                <option value="México">México</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Chile">Chile</option>
+                <option value="Argentina">Argentina</option>
+                <option value="España">España</option>
+                <option value="Otro">Otro</option>
+              </select>
+              <span class="lg-chevron" aria-hidden="true">⌄</span>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="lg-campo">
+              <input id="reg-telefono" class="lg-input" type="tel" placeholder="Teléfono" autocomplete="off">
+            </div>
+
+            <!-- Correo -->
+            <div class="lg-campo">
+              <input id="reg-correo" class="lg-input" type="email" placeholder="Correo electrónico" autocomplete="off">
+            </div>
+
+            <!-- Contraseña -->
+            <div class="lg-campo lg-campo--pass">
+              <input id="reg-clave" class="lg-input" type="password" placeholder="Contraseña" autocomplete="new-password">
+              <button type="button" class="lg-ojo" id="toggle-reg-clave" aria-label="Mostrar contraseña">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5C5 5 2 12 2 12s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z" fill="#004481"/>
+                  <circle cx="12" cy="12" r="2.4" fill="#004481"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="lg-campo lg-campo--pass">
+              <input id="reg-clave2" class="lg-input" type="password" placeholder="Confirmar contraseña" autocomplete="new-password">
+              <button type="button" class="lg-ojo" id="toggle-reg-clave2" aria-label="Mostrar contraseña">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5C5 5 2 12 2 12s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z" fill="#004481"/>
+                  <circle cx="12" cy="12" r="2.4" fill="#004481"/>
+                </svg>
+              </button>
+            </div>
+
+            <p class="lg-error" id="registro-error" hidden></p>
+
+            <div class="lg-botones">
+              <button type="submit" class="lg-btn lg-btn--primario">Registrarse</button>
+              <a href="login.html" class="lg-btn lg-btn--secundario lg-btn--enlace">Iniciar sesión</a>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Tarjeta promocional -->
+      <div class="col-12 col-lg-5">
+        <section class="lg-card lg-card--promo">
+          <div class="lg-promo__top">
+            <div class="lg-promo__cel" aria-hidden="true">📱</div>
+            <span class="lg-promo__nuevo">¡Nuevo!</span>
+          </div>
+          <h2 class="lg-promo__titulo">Tu Banca por Internet, lista al instante.</h2>
+          <p class="lg-promo__texto">Regístrate y empieza a gestionar tus cuentas y tarjetas desde donde estés.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ Footer azul ============ -->
+  <footer class="lg-footer">
+    <span class="lg-footer__logo">BANCO</span>
+    <div class="lg-footer__social">
+      <a href="#" class="lg-red" aria-label="Facebook">f</a>
+      <a href="#" class="lg-red" aria-label="X">𝕏</a>
+      <a href="#" class="lg-red" aria-label="Instagram">◎</a>
+      <a href="#" class="lg-red" aria-label="LinkedIn">in</a>
+      <a href="#" class="lg-red" aria-label="YouTube">▶</a>
+    </div>
+  </footer>
+
+  <script src="js/usuarios.js"></script>
+</body>
+</html>

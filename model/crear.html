@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Crear</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__util">
+      <div class="topbar__util-inner">
+        <a href="#" class="util-link util-link--icon">? Conoce tu Banca por Internet</a>
+        <a href="#" class="util-link util-link--icon">Libro de reclamaciones</a>
+        <a href="#" class="util-link util-link--destacado">Productos del Mes</a>
+        <a href="#" class="util-link util-link--salir">← Salir</a>
+      </div>
+    </div>
+    <div class="topbar__main">
+      <div class="topbar__main-inner">
+        <a class="brand" href="inicio.html">
+          <span class="brand__name">BANCO</span>
+        </a>
+        <div class="usuario">
+          <span class="usuario__avatar">👤</span>
+          <span class="usuario__info">
+            <span class="usuario__nombre">DIEGO FLORES CASTRO <span class="usuario__chevron">⌄</span></span>
+            <a href="#" class="usuario__datos">Actualiza tus datos</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <nav class="menu">
+      <div class="menu__inner">
+        <a href="inicio.html" class="menu__link">Inicio</a>
+        <a href="cuentas.html" class="menu__link">Cuentas</a>
+        <a href="tarjetas.html" class="menu__link">Tarjetas</a>
+        <a href="crear.html" class="menu__link is-active">Crear</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="row g-0">
+      <div class="col-12">
+        <!-- ============ Título + selector ============ -->
+        <div class="modulo-head">
+          <h1 class="modulo-title">Crear</h1>
+          <div class="tabs" role="tablist">
+            <button class="tabs__tab is-active" type="button" role="tab" data-tipo="cuenta">Cuenta</button>
+            <button class="tabs__tab" type="button" role="tab" data-tipo="tarjeta">Tarjeta</button>
+          </div>
+        </div>
+        <div class="modulo-linea"></div>
+
+        <section class="crear-card">
+          <h2 class="crear-card__titulo" id="crear-titulo">Nueva cuenta</h2>
+
+          <form id="crear-form" novalidate>
+            <!-- Campos exclusivos de TARJETA -->
+            <div class="crear-solo-tarjeta" id="campo-linea" hidden>
+              <label class="crear-label" for="crear-linea">Línea de crédito</label>
+              <div class="crear-fila-importe">
+                <span class="ops-moneda">S/</span>
+                <input id="crear-linea" class="crear-input" type="text" inputmode="decimal" placeholder="5000.00">
+              </div>
+            </div>
+
+            <!-- Campos comunes -->
+            <label class="crear-label" for="crear-nombre">Nombre del producto</label>
+            <input id="crear-nombre" class="crear-input" type="text" maxlength="30" placeholder="Ej. CUENTA AHORROS" autocomplete="off">
+
+            <label class="crear-label" for="crear-moneda">Moneda</label>
+            <div class="crear-campo--select">
+              <select id="crear-moneda" class="crear-input crear-input--select">
+                <option value="Soles" selected>Soles</option>
+                <option value="Dólares" disabled>Dólares (próximamente)</option>
+              </select>
+              <span class="crear-chevron" aria-hidden="true">⌄</span>
+            </div>
+
+            <label class="crear-label" for="crear-saldo" id="crear-label-saldo">Saldo inicial</label>
+            <div class="crear-fila-importe">
+              <span class="ops-moneda">S/</span>
+              <input id="crear-saldo" class="crear-input" type="text" inputmode="decimal" placeholder="0.00">
+            </div>
+
+            <p class="lg-error" id="crear-error" hidden></p>
+
+            <div class="crear-botones">
+              <button type="submit" class="btn-primario-block">Crear producto</button>
+              <a href="inicio.html" class="btn-secundario-block">Cancelar</a>
+            </div>
+          </form>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/usuarios.js"></script>
+  <script src="js/crear.js"></script>
+</body>
+</html>

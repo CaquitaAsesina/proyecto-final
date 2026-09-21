@@ -16,15 +16,15 @@ function renderCuentas() {
           <td>
             <div class="fila-producto">
               <div class="producto-info">
-                <a class="cuenta-num cuenta-num--link" href="cuentas.html?cuenta=${encodeURIComponent(c.numero)}" title="Ver detalle de la cuenta">${c.numero}</a>
-                <span class="cuenta-nombre">${c.nombre}</span>
+                <a class="cuenta-num cuenta-num--link" href="cuentas.html?cuenta=${encodeURIComponent(c.numero)}" title="Ver detalle de la cuenta">${esc(c.numero)}</a>
+                <span class="cuenta-nombre">${esc(c.nombre)}</span>
               </div>
               <div class="quiero-wrap">
                 <button class="btn-quiero" type="button">Quiero</button>
                 <div class="quiero-menu">
                   <button type="button" data-accion="detalle" data-cuenta="${c.numero}">Ver detalle</button>
-                  <button type="button" data-accion="movimientos">Ver movimientos</button>
-                  <button type="button" data-accion="transferir">Transferir</button>
+                  <button type="button" data-accion="movimientos" data-cuenta="${c.numero}">Ver movimientos</button>
+                  <button type="button" data-accion="transferir" data-cuenta="${c.numero}">Transferir</button>
                 </div>
               </div>
             </div>
@@ -54,16 +54,16 @@ function renderTarjetas() {
           <td>
             <div class="fila-producto">
               <div class="producto-info">
-                <a class="tarjeta-num tarjeta-num--link" href="tarjetas.html?tarjeta=${encodeURIComponent(t.numero)}" title="Ver detalle de la tarjeta">${t.numero}</a>
-                <span class="tarjeta-nombre">${t.nombre}</span>
-                <span class="tarjeta-titular">${t.titular}</span>
+                <a class="tarjeta-num tarjeta-num--link" href="tarjetas.html?tarjeta=${encodeURIComponent(t.numero)}" title="Ver detalle de la tarjeta">${esc(t.numero)}</a>
+                <span class="tarjeta-nombre">${esc(t.nombre)}</span>
+                <span class="tarjeta-titular">${esc(t.titular)}</span>
               </div>
               <div class="quiero-wrap">
                 <button class="btn-quiero" type="button">Quiero</button>
                 <div class="quiero-menu">
                   <button type="button" data-accion="detalle" data-tarjeta="${t.numero}">Ver detalle</button>
-                  <button type="button" data-accion="movimientos">Ver movimientos</button>
-                  <button type="button" data-accion="pagar">Pagar tarjeta</button>
+                  <button type="button" data-accion="movimientos" data-tarjeta="${t.numero}">Ver movimientos</button>
+                  <button type="button" data-accion="transferir" data-tarjeta="${t.numero}">Transferir</button>
                 </div>
               </div>
             </div>
@@ -92,21 +92,30 @@ function renderTarjetas() {
   totalEl.textContent = dinero(totalCredito);
 }
 
-// ---------- Acciones del menú "Quiero" ----------
+// ---------- Acciones del menú "Quiero" (atajos) ----------
 function ejecutarAccion(accion, origen) {
-  if (accion === "detalle" || accion === "saldo") {
-    if (origen.cuenta) {
-      window.location.href = "cuentas.html?cuenta=" + encodeURIComponent(origen.cuenta);
-    } else if (origen.tarjeta) {
-      window.location.href = "tarjetas.html?tarjeta=" + encodeURIComponent(origen.tarjeta);
-    }
-  } else {
-    alert("Funcionalidad próximamente: " + accion);
+  const producto = origen.cuenta
+    ? "cuenta=" + encodeURIComponent(origen.cuenta)
+    : "tarjeta=" + encodeURIComponent(origen.tarjeta);
+  const pagina = origen.cuenta ? "cuentas.html" : "tarjetas.html";
+
+  // Atajos: detalle → resumen, movimientos → tabla, transferir → panel Operaciones
+  const vista = accion === "detalle" || accion === "movimientos" || accion === "transferir"
+    ? "&vista=" + accion
+    : "";
+
+  if (accion === "pagar") {
+    alert("Funcionalidad próximamente: pagar tarjeta.");
+    return;
   }
+
+  window.location.href = pagina + "?" + producto + vista;
 }
 
 // ---------- Init ----------
 document.addEventListener("DOMContentLoaded", () => {
+  cargarProductosUsuario();
+  initSesionHeader();
   renderCuentas();
   renderTarjetas();
 

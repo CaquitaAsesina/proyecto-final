@@ -26,16 +26,16 @@ function renderTarjetas() {
           <td>
             <div class="fila-producto">
               <div class="producto-info">
-                <a class="tarjeta-num tarjeta-num--link" href="tarjetas.html?tarjeta=${encodeURIComponent(t.numero)}">${t.numero}</a>
-                <span class="tarjeta-nombre">${t.nombre}</span>
-                <span class="tarjeta-titular">${t.titular}</span>
+                <a class="tarjeta-num tarjeta-num--link" href="tarjetas.html?tarjeta=${encodeURIComponent(t.numero)}">${esc(t.numero)}</a>
+                <span class="tarjeta-nombre">${esc(t.nombre)}</span>
+                <span class="tarjeta-titular">${esc(t.titular)}</span>
               </div>
               <div class="quiero-wrap">
                 <button class="btn-quiero" type="button">Quiero</button>
                 <div class="quiero-menu">
-                  <button type="button" data-accion="detalle">Ver detalle</button>
-                  <button type="button" data-accion="movimientos">Ver movimientos</button>
-                  <button type="button" data-accion="pagar">Pagar tarjeta</button>
+                  <button type="button" data-accion="detalle" data-tarjeta="${t.numero}">Ver detalle</button>
+                  <button type="button" data-accion="movimientos" data-tarjeta="${t.numero}">Ver movimientos</button>
+                  <button type="button" data-accion="transferir" data-tarjeta="${t.numero}">Transferir</button>
                 </div>
               </div>
             </div>
@@ -66,46 +66,64 @@ function renderTarjetas() {
 
 // ---------- Render del detalle (pestaña Más información) ----------
 function renderDetalle() {
-  const detalleEl = document.getElementById("tarjeta-detalle");
-  const tarjetaSeleccionada = getTarjetaDesdeURL();
+  const numEl = document.getElementById("detalle-numero");
+  const nombreEl = document.getElementById("detalle-nombre");
+  const disponibleEl = document.getElementById("detalle-disponible");
+  const consumidoEl = document.getElementById("detalle-consumido");
+  const movsTbody = document.getElementById("movs-tbody");
 
+  const tarjetaSeleccionada = getTarjetaDesdeURL();
   const tarjeta = tarjetas.find((t) => t.numero === tarjetaSeleccionada) || tarjetas[0];
 
   if (!tarjeta) {
-    detalleEl.innerHTML = "<div class=\"detalle-vacio\">No hay tarjetas registradas.</div>";
+    numEl.textContent = "—";
+    nombreEl.textContent = "No hay tarjetas registradas.";
+    disponibleEl.textContent = "";
+    consumidoEl.textContent = "";
+    movsTbody.innerHTML = "";
     return;
   }
 
   const disponible = tarjeta.lineaCredito - tarjeta.consumo;
-  const pct = Math.min(100, (tarjeta.consumo / tarjeta.lineaCredito) * 100);
 
-  detalleEl.innerHTML = `
-    <div class="detalle-item detalle-item--full"><dt>Número de tarjeta</dt><dd class="tarjeta-num">${tarjeta.numero}</dd></div>
-    <div class="detalle-item"><dt>Producto</dt><dd>${tarjeta.nombre}</dd></div>
-    <div class="detalle-item"><dt>Titular</dt><dd>${tarjeta.titular}</dd></div>
-    <div class="detalle-item"><dt>Estado</dt><dd>${tarjeta.estado}</dd></div>
-    <div class="detalle-item"><dt>Fecha de emisión</dt><dd>${tarjeta.emision}</dd></div>
-    <div class="detalle-item"><dt>Línea de crédito</dt><dd class="saldo-importe">${dinero(tarjeta.lineaCredito)}</dd></div>
-    <div class="detalle-item"><dt>Crédito consumido</dt><dd class="saldo-importe">${dinero(tarjeta.consumo)}</dd></div>
-    <div class="detalle-item"><dt>Crédito disponible</dt><dd class="saldo-importe">${dinero(disponible)}</dd></div>
-    <div class="detalle-item detalle-item--full">
-      <dt>Uso de la línea</dt>
-      <dd>
-        <div class="barra-credito" style="max-width: 340px;">
-          <div class="barra-credito__fill" style="width: ${pct}%;"></div>
-        </div>
-      </dd>
-    </div>
-  `;
+  // Producto actual (para initDetalleMovimientos)
+  window.__productoActual = tarjeta;
+
+  // Resumen
+  numEl.textContent = tarjeta.numero;
+  nombreEl.textContent = tarjeta.nombre;
+  disponibleEl.textContent = dinero(disponible);
+  consumidoEl.textContent = dinero(tarjeta.consumo);
+
+  // Movimientos (filas clickeables; el detalle se inserta debajo de la fila)
+  const movs = tarjeta.movimientos || [];
+  movsTbody.innerHTML = movs
+    .map((m, i) => {
+      const signo = m.monto < 0 ? "- " : "";
+      return `
+        <tr class="movs-fila" data-mov="${i}">
+          <td class="movs-fecha">${m.fecha}</td>
+          <td class="movs-desc"><a href="#" class="movs-enlace">${esc(m.descripcion)}</a></td>
+          <td class="movs-monto">${signo}${dinero(Math.abs(m.monto))}</td>
+        </tr>
+      `;
+    })
+    .join("");
 }
 
 // ---------- Init ----------
 document.addEventListener("DOMContentLoaded", () => {
+  cargarProductosUsuario();
+  initSesionHeader();
   renderTarjetas();
   renderDetalle();
   initTabs();
   initSwitch();
   initQuieroMenus();
   initPaneles();
+  initOperaciones();
+  initDetalleMovimientos();
+  initAtajosQuiero();
+  activarVistaDesdeURL();
   if (importesOcultos) aplicarOcultarImportes();
 });

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Banca por Internet</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-body">
+  <!-- ============ Header blanco ============ -->
+  <header class="lg-header">
+    <a class="lg-logo" href="login.html">BANCO</a>
+    <a href="#" class="lg-header__link">Ir a Banco Perú</a>
+  </header>
+
+  <!-- ============ Contenido ============ -->
+  <main class="lg-main">
+    <div class="row g-4">
+      <!-- Tarjeta del formulario -->
+      <div class="col-12 col-lg-7">
+        <section class="lg-card lg-card--form">
+          <h1 class="lg-hola">¡Hola!</h1>
+          <p class="lg-subtitulo">Ingresa con tu DNI y disfruta de tu Banca por Internet</p>
+
+          <form id="login-form" novalidate>
+            <!-- DNI o correo -->
+            <div class="lg-campo">
+              <input id="num-doc" class="lg-input" type="text" placeholder="DNI o correo electrónico" autocomplete="off">
+            </div>
+
+            <!-- Recordar documento -->
+            <div class="lg-recordar">
+              <label class="lg-check">
+                <input type="checkbox" id="recordar" checked>
+                <span class="lg-check__caja" aria-hidden="true"></span>
+                <span class="lg-check__texto">Recordar documento</span>
+              </label>
+              <span class="lg-help" title="Guardamos tu número de documento en este navegador para no escribirlo la próxima vez.">?</span>
+            </div>
+
+            <!-- Nombre (opcional) -->
+            <div class="lg-campo">
+              <input id="usuario" class="lg-input" type="text" placeholder="Nombre (opcional)" autocomplete="off">
+            </div>
+
+            <!-- Contraseña -->
+            <div class="lg-campo lg-campo--pass">
+              <input id="clave" class="lg-input" type="password" placeholder="Contraseña de Banca por Internet" autocomplete="off">
+              <button type="button" class="lg-ojo" id="toggle-clave" aria-label="Mostrar contraseña">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M12 5C5 5 2 12 2 12s3 7 10 7 10-7 10-7-3-7-10-7zm0 11a4 4 0 110-8 4 4 0 010 8z" fill="#004481"/>
+                  <circle cx="12" cy="12" r="2.4" fill="#004481"/>
+                </svg>
+              </button>
+            </div>
+
+            <p class="lg-error" id="login-error" hidden></p>
+
+            <p class="lg-demo">Usuarios de prueba: <strong>70123456</strong> / <strong>diego789</strong> · <strong>79876543</strong> / <strong>vale2026</strong> · <strong>74445556</strong> / <strong>martin456</strong></p>
+            <p class="lg-demo lg-demo--analista">Acceso analista (DNI): <strong>10101010</strong> / <strong>analista2026</strong></p>
+
+            <a href="#" class="lg-enlace">¿Olvidaste o bloqueaste tu contraseña?</a>
+
+            <div class="lg-botones">
+              <button type="submit" class="lg-btn lg-btn--primario">Ingresar</button>
+              <a href="registro.html" class="lg-btn lg-btn--secundario lg-btn--enlace">Afíliate</a>
+            </div>
+          </form>
+        </section>
+      </div>
+
+      <!-- Tarjeta promocional -->
+      <div class="col-12 col-lg-5">
+        <section class="lg-card lg-card--promo">
+          <div class="lg-promo__top">
+            <div class="lg-promo__cel" aria-hidden="true">📱</div>
+            <span class="lg-promo__nuevo">¡Nuevo!</span>
+          </div>
+          <h2 class="lg-promo__titulo">Hazte cliente BANCO, sin trámites ni colas.</h2>
+          <p class="lg-promo__texto">Abre tu Cuenta Digital en minutos y empieza a ahorrar desde donde estés.</p>
+          <button type="button" class="lg-btn lg-btn--primario lg-promo__btn">Descarga aquí</button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ Footer azul ============ -->
+  <footer class="lg-footer">
+    <span class="lg-footer__logo">BANCO</span>
+    <div class="lg-footer__social">
+      <a href="#" class="lg-red" aria-label="Facebook">f</a>
+      <a href="#" class="lg-red" aria-label="X">𝕏</a>
+      <a href="#" class="lg-red" aria-label="Instagram">◎</a>
+      <a href="#" class="lg-red" aria-label="LinkedIn">in</a>
+      <a href="#" class="lg-red" aria-label="YouTube">▶</a>
+    </div>
+  </footer>
+
+  <script src="js/usuarios.js"></script>
+  <script src="js/login.js"></script>
+</body>
+</html>

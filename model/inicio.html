@@ -9,17 +9,36 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar__inner">
-      <a class="brand" href="inicio.html">
-        <span class="brand__logo">B</span>
-        <span class="brand__name">Banco</span>
-      </a>
-      <nav class="menu">
+    <div class="topbar__util">
+      <div class="topbar__util-inner">
+        <a href="#" class="util-link util-link--icon">? Conoce tu Banca por Internet</a>
+        <a href="#" class="util-link util-link--icon">Libro de reclamaciones</a>
+        <a href="#" class="util-link util-link--destacado">Productos del Mes</a>
+        <a href="#" class="util-link util-link--salir">← Salir</a>
+      </div>
+    </div>
+    <div class="topbar__main">
+      <div class="topbar__main-inner">
+        <a class="brand" href="inicio.html">
+          <span class="brand__name">BANCO</span>
+        </a>
+        <div class="usuario">
+          <span class="usuario__avatar">👤</span>
+          <span class="usuario__info">
+            <span class="usuario__nombre">DIEGO FLORES CASTRO <span class="usuario__chevron">⌄</span></span>
+            <a href="#" class="usuario__datos">Actualiza tus datos</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <nav class="menu">
+      <div class="menu__inner">
         <a href="inicio.html" class="menu__link is-active">Inicio</a>
         <a href="cuentas.html" class="menu__link">Cuentas</a>
         <a href="tarjetas.html" class="menu__link">Tarjetas</a>
-      </nav>
-    </div>
+        <a href="crear.html" class="menu__link">Crear</a>
+      </div>
+    </nav>
   </header>
 
   <main class="main">
@@ -82,6 +101,7 @@
   </main>
 
   <script src="js/datos.js"></script>
+  <script src="js/usuarios.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/app.js"></script>
 </body>

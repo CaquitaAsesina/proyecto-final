@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Analista</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/analista.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__util">
+      <div class="topbar__util-inner">
+        <a href="#" class="util-link util-link--icon">Libro de reclamaciones</a>
+        <a href="#" class="util-link util-link--salir">← Salir</a>
+      </div>
+    </div>
+    <div class="topbar__main">
+      <div class="topbar__main-inner">
+        <a class="brand" href="analista.html">
+          <span class="brand__name">BANCO</span>
+        </a>
+        <div class="usuario">
+          <span class="usuario__avatar">👤</span>
+          <span class="usuario__info">
+            <span class="usuario__nombre">ANALISTA <span class="usuario__chevron">⌄</span></span>
+            <span class="usuario__rol" id="an-rol">ANALISTA · AN-000</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <nav class="menu">
+      <div class="menu__inner">
+        <a href="analista.html" class="menu__link is-active">Analista</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="row g-0">
+      <div class="col-12">
+
+        <!-- ============ Título ============ -->
+        <div class="modulo-head">
+          <h1 class="modulo-title">Transacciones de clientes</h1>
+        </div>
+        <div class="modulo-linea"></div>
+
+        <!-- ============ Ocultar importes ============ -->
+        <div class="ocultar-row">
+          <span class="ocultar-label">Ocultar importes <span class="info-icon" title="Al activarlo, los importes se muestran como asteriscos.">i</span></span>
+          <div class="switch" id="switch-ocultar" role="switch" aria-checked="false" tabindex="0">
+            <span class="switch__opt switch__opt--off">OFF</span>
+            <span class="switch__opt switch__opt--on">ON</span>
+          </div>
+        </div>
+
+        <!-- ============ Filtros ============ -->
+        <section class="panel" id="panel-filtros">
+          <button class="panel__header" type="button" data-toggle="panel-filtros" aria-expanded="true">
+            <h2 class="panel__title">Filtros</h2>
+            <span class="panel__arrow" aria-hidden="true">▲</span>
+          </button>
+
+          <div class="panel__body" id="panel-filtros-body">
+            <div class="an-filtros">
+              <div class="an-filtro an-filtro--buscar">
+                <label for="an-buscar">Buscar</label>
+                <input id="an-buscar" type="text" class="an-input" placeholder="Cliente, descripción o producto...">
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-cliente">Cliente</label>
+                <select id="an-f-cliente" class="an-input">
+                  <option value="">Todos los clientes</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-producto">Producto</label>
+                <select id="an-f-producto" class="an-input">
+                  <option value="">Todos</option>
+                  <option value="cuenta">Cuentas</option>
+                  <option value="tarjeta">Tarjetas</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-operacion">Operación</label>
+                <select id="an-f-operacion" class="an-input">
+                  <option value="">Todas</option>
+                  <option value="TRANSFERENCIA MOVIL">TRANSFERENCIA MOVIL</option>
+                  <option value="TRANSFERENCIA CTA">TRANSFERENCIA CTA</option>
+                  <option value="COMPRA COMERC">COMPRA COMERC</option>
+                  <option value="ABONO NOMINA">ABONO NOMINA</option>
+                  <option value="RETIRO CAJERO">RETIRO CAJERO</option>
+                  <option value="ABONO INTERES">ABONO INTERES</option>
+                  <option value="DEPOSITO CTA">DEPOSITO CTA</option>
+                  <option value="PAGO SERVICIOS">PAGO SERVICIOS</option>
+                  <option value="PAGO TARJETA">PAGO TARJETA</option>
+                  <option value="OPERACION VARIAS">OPERACION VARIAS</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-tipo">Importe</label>
+                <select id="an-f-tipo" class="an-input">
+                  <option value="">Todos</option>
+                  <option value="positivo">Ingresos</option>
+                  <option value="negativo">Salidas</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-desde">Desde</label>
+                <input id="an-f-desde" type="date" class="an-input">
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-hasta">Hasta</label>
+                <input id="an-f-hasta" type="date" class="an-input">
+              </div>
+
+              <div class="an-filtro an-filtro--accion">
+                <button type="button" id="an-limpiar" class="an-btn an-btn--fantasma">Limpiar filtros</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============ Resumen de lo filtrado ============ -->
+        <section class="an-resumen">
+          <span class="an-resumen__item"><strong id="an-n">0</strong> transacciones</span>
+          <span class="an-resumen__item">Ingresos: <strong id="an-ingresos" class="an-verde">S/ 0.00</strong></span>
+          <span class="an-resumen__item">Salidas: <strong id="an-salidas" class="an-rojo">S/ 0.00</strong></span>
+          <span class="an-resumen__item an-resumen__item--neto">Neto: <strong id="an-neto">S/ 0.00</strong></span>
+        </section>
+
+        <!-- ============ Consolidado ============ -->
+        <section class="panel" id="panel-consolidado">
+          <button class="panel__header" type="button" data-toggle="panel-consolidado" aria-expanded="true">
+            <h2 class="panel__title">Consolidado de transacciones</h2>
+            <span class="an-badge an-badge--info" id="an-orden-indicador">Fecha: más recientes</span>
+            <span class="panel__arrow" aria-hidden="true">▲</span>
+          </button>
+
+          <div class="panel__body" id="panel-consolidado-body">
+            <div class="table-responsive">
+              <table class="an-tabla">
+                <thead>
+                  <tr>
+                    <th class="an-col-fecha"><button type="button" class="an-th-btn" data-orden="fecha">Fecha</button></th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Operación</th>
+                    <th>Descripción</th>
+                    <th class="an-col-importe"><button type="button" class="an-th-btn" data-orden="importe">Importe</button></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="an-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/usuarios.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/analista.js"></script>
+</body>
+</html>

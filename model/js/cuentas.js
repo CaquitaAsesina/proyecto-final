@@ -24,15 +24,15 @@ function renderCuentas() {
           <td>
             <div class="fila-producto">
               <div class="producto-info">
-                <a class="cuenta-num cuenta-num--link" href="cuentas.html?cuenta=${encodeURIComponent(c.numero)}">${c.numero}</a>
-                <span class="cuenta-nombre">${c.nombre}</span>
+                <a class="cuenta-num cuenta-num--link" href="cuentas.html?cuenta=${encodeURIComponent(c.numero)}">${esc(c.numero)}</a>
+                <span class="cuenta-nombre">${esc(c.nombre)}</span>
               </div>
               <div class="quiero-wrap">
                 <button class="btn-quiero" type="button">Quiero</button>
                 <div class="quiero-menu">
-                  <button type="button" data-accion="detalle">Ver detalle</button>
-                  <button type="button" data-accion="movimientos">Ver movimientos</button>
-                  <button type="button" data-accion="transferir">Transferir</button>
+                  <button type="button" data-accion="detalle" data-cuenta="${c.numero}">Ver detalle</button>
+                  <button type="button" data-accion="movimientos" data-cuenta="${c.numero}">Ver movimientos</button>
+                  <button type="button" data-accion="transferir" data-cuenta="${c.numero}">Transferir</button>
                 </div>
               </div>
             </div>
@@ -50,34 +50,64 @@ function renderCuentas() {
 
 // ---------- Render del detalle (pestaña Más información) ----------
 function renderDetalle() {
-  const detalleEl = document.getElementById("cuenta-detalle");
-  const cuentaSeleccionada = getCuentaDesdeURL();
+  const numEl = document.getElementById("detalle-numero");
+  const nombreEl = document.getElementById("detalle-nombre");
+  const disponibleEl = document.getElementById("detalle-disponible");
+  const contableEl = document.getElementById("detalle-contable");
+  const movsTbody = document.getElementById("movs-tbody");
 
+  const cuentaSeleccionada = getCuentaDesdeURL();
   const cuenta = cuentas.find((c) => c.numero === cuentaSeleccionada) || cuentas[0];
 
   if (!cuenta) {
-    detalleEl.innerHTML = "<div class=\"detalle-vacio\">No hay cuentas registradas.</div>";
+    numEl.textContent = "—";
+    nombreEl.textContent = "No hay cuentas registradas.";
+    disponibleEl.textContent = "";
+    contableEl.textContent = "";
+    movsTbody.innerHTML = "";
     return;
   }
 
-  detalleEl.innerHTML = `
-    <div class="detalle-item detalle-item--full"><dt>Número de cuenta</dt><dd class="cuenta-num">${cuenta.numero}</dd></div>
-    <div class="detalle-item"><dt>Nombre</dt><dd>${cuenta.nombre}</dd></div>
-    <div class="detalle-item"><dt>Moneda</dt><dd>Soles</dd></div>
-    <div class="detalle-item"><dt>Estado</dt><dd>${cuenta.estado}</dd></div>
-    <div class="detalle-item"><dt>Fecha de apertura</dt><dd>${cuenta.aperturada}</dd></div>
-    <div class="detalle-item"><dt>Saldo contable</dt><dd class="saldo-importe">${dinero(cuenta.saldoContable)}</dd></div>
-    <div class="detalle-item"><dt>Saldo disponible</dt><dd class="saldo-importe">${dinero(cuenta.saldoDisponible)}</dd></div>
-  `;
+  // Producto actual (para initDetalleMovimientos)
+  window.__productoActual = cuenta;
+
+  // Resumen
+  numEl.textContent = cuenta.numero;
+  nombreEl.textContent = cuenta.nombre;
+  disponibleEl.textContent = dinero(cuenta.saldoDisponible);
+  contableEl.textContent = dinero(cuenta.saldoContable);
+
+  // Movimientos (filas clickeables; el detalle se inserta debajo de la fila)
+  const movs = cuenta.movimientos || [];
+  movsTbody.innerHTML = movs
+    .map((m, i) => {
+      const clase = m.monto < 0 ? " movs-monto--negativo" : "";
+      const monto = dinero(Math.abs(m.monto));
+      const signo = m.monto < 0 ? "- " : "";
+      return `
+        <tr class="movs-fila" data-mov="${i}">
+          <td class="movs-fecha">${m.fecha}</td>
+          <td class="movs-desc"><a href="#" class="movs-enlace">${esc(m.descripcion)}</a></td>
+          <td class="movs-monto${clase}">${signo}${monto}</td>
+        </tr>
+      `;
+    })
+    .join("");
 }
 
 // ---------- Init ----------
 document.addEventListener("DOMContentLoaded", () => {
+  cargarProductosUsuario();
+  initSesionHeader();
   renderCuentas();
   renderDetalle();
   initTabs();
   initSwitch();
   initQuieroMenus();
   initPaneles();
+  initOperaciones();
+  initDetalleMovimientos();
+  initAtajosQuiero();
+  activarVistaDesdeURL();
   if (importesOcultos) aplicarOcultarImportes();
 });

@@ -9,17 +9,36 @@
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar__inner">
-      <a class="brand" href="inicio.html">
-        <span class="brand__logo">B</span>
-        <span class="brand__name">Banco</span>
-      </a>
-      <nav class="menu">
+    <div class="topbar__util">
+      <div class="topbar__util-inner">
+        <a href="#" class="util-link util-link--icon">? Conoce tu Banca por Internet</a>
+        <a href="#" class="util-link util-link--icon">Libro de reclamaciones</a>
+        <a href="#" class="util-link util-link--destacado">Productos del Mes</a>
+        <a href="#" class="util-link util-link--salir">← Salir</a>
+      </div>
+    </div>
+    <div class="topbar__main">
+      <div class="topbar__main-inner">
+        <a class="brand" href="inicio.html">
+          <span class="brand__name">BANCO</span>
+        </a>
+        <div class="usuario">
+          <span class="usuario__avatar">👤</span>
+          <span class="usuario__info">
+            <span class="usuario__nombre">DIEGO FLORES CASTRO <span class="usuario__chevron">⌄</span></span>
+            <a href="#" class="usuario__datos">Actualiza tus datos</a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <nav class="menu">
+      <div class="menu__inner">
         <a href="inicio.html" class="menu__link">Inicio</a>
         <a href="cuentas.html" class="menu__link">Cuentas</a>
         <a href="tarjetas.html" class="menu__link is-active">Tarjetas</a>
-      </nav>
-    </div>
+        <a href="crear.html" class="menu__link">Crear</a>
+      </div>
+    </nav>
   </header>
 
   <main class="main">
@@ -39,7 +58,7 @@
     <div class="ocultar-row">
       <span class="ocultar-label">Ocultar importes <span class="info-icon" title="Al activarlo, los importes se muestran como asteriscos.">i</span></span>
       <div class="switch" id="switch-ocultar" role="switch" aria-checked="false" tabindex="0">
-        <span class="switch__opt switch__opt--off is-on">OFF</span>
+        <span class="switch__opt switch__opt--off">OFF</span>
         <span class="switch__opt switch__opt--on">ON</span>
       </div>
     </div>
@@ -72,22 +91,129 @@
       </section>
     </section>
 
-    <!-- ============ Panel Más información ============ -->
+    <!-- ============ Panel Más información (detalle de la tarjeta) ============ -->
     <section class="tab-panel" id="tab-mas-informacion">
-      <section class="panel">
-        <div class="panel__header panel__header--static">
-          <h2 class="panel__title">Detalle de la tarjeta</h2>
+      <!-- Resumen: número/nombre a la izquierda, créditos a la derecha -->
+      <div class="resumen">
+        <div class="resumen__identidad">
+          <span class="tarjeta-num" id="detalle-numero"></span>
+          <span class="tarjeta-nombre" id="detalle-nombre"></span>
+          <span class="tarjeta-titular">TITULAR</span>
         </div>
-        <div class="panel__body">
-          <dl class="detalle-lista" id="tarjeta-detalle"><!-- Renderizado por JS --></dl>
+        <div class="resumen__saldos">
+          <span class="resumen__etiqueta">DISPONIBLE</span>
+          <span class="resumen__disponible saldo-importe" id="detalle-disponible"></span>
+          <span class="resumen__contable">Consumido <span class="saldo-importe" id="detalle-consumido"></span></span>
+          <a href="#" class="resumen__enlace">Consulta tu línea de crédito y <br>fechas de facturación <span class="info-icon" title="Resumen del estado de tu tarjeta de crédito.">i</span></a>
         </div>
-      </section>
+      </div>
+
+      <!-- Barra Búsquedas / Operaciones -->
+      <div class="acciones-bar">
+        <div class="acciones-bar__grupo">
+          <button class="acciones-bar__btn acciones-bar__btn--activo" type="button">Búsquedas <span class="acciones-bar__icono">&#128269;</span></button>
+          <button class="acciones-bar__btn" type="button" data-abre-operaciones>Operaciones <span class="acciones-bar__icono">&#128179;</span></button>
+        </div>
+        <div class="acciones-bar__grupo acciones-bar__grupo--enlaces">
+          <a href="#" class="acciones-bar__enlace">Cta. Interbancaria/Remesas</a>
+          <a href="#" class="acciones-bar__enlace">Condiciones</a>
+        </div>
+      </div>
+
+      <!-- Panel Operaciones: Realizar transferencia -->
+      <div class="ops-panel" id="ops-panel" hidden>
+        <button class="ops-panel__cerrar" type="button" data-cierra-operaciones title="Cerrar">✕</button>
+        <div class="ops-panel__head">
+          <span class="ops-panel__quiero">Quiero</span>
+          <h3 class="ops-panel__titulo">Realizar transferencia</h3>
+        </div>
+
+        <div class="ops-cuerpo">
+          <p class="ops-enviar">Enviar dinero a:</p>
+
+          <!-- Segmentos -->
+          <div class="ops-segmentos">
+            <button class="ops-segmento" type="button" data-segmento="mis-cuentas">Mis cuentas</button>
+            <button class="ops-segmento is-activo" type="button" data-segmento="terceros">Terceros</button>
+            <button class="ops-segmento" type="button" data-segmento="otros-bancos">Otros Bancos</button>
+          </div>
+
+          <!-- Formulario Terceros -->
+          <div class="ops-form ops-form--activa" data-form="terceros">
+            <div class="ops-fila">
+              <span class="ops-label">Número de cuenta</span>
+              <span class="ops-input ops-input--fijo">0011</span>
+              <span class="ops-guion">-</span>
+              <input class="ops-input ops-input--medio" type="text" maxlength="4" inputmode="numeric" placeholder="">
+              <span class="ops-guion">-</span>
+              <input class="ops-input ops-input--largo" type="text" maxlength="10" inputmode="numeric" placeholder="">
+              <span class="ops-icono-libreta">&#128211;</span>
+            </div>
+          </div>
+
+          <!-- Formulario Mis cuentas -->
+          <div class="ops-form" data-form="mis-cuentas">
+            <div class="ops-fila">
+              <span class="ops-label">Cuenta destino</span>
+              <select class="ops-select">
+                <option value="">Seleccione una cuenta…</option>
+              </select>
+            </div>
+            <div class="ops-fila ops-fila--importe">
+              <span class="ops-label">Importe a transferir</span>
+              <span class="ops-moneda">S/</span>
+              <input class="ops-input ops-input--importe" type="text" inputmode="decimal" placeholder="0.00">
+            </div>
+          </div>
+
+          <!-- Formulario Otros bancos -->
+          <div class="ops-form" data-form="otros-bancos">
+            <div class="ops-fila">
+              <span class="ops-label">Número de cuenta</span>
+              <input class="ops-input ops-input--largo" type="text" maxlength="20" inputmode="numeric" placeholder="">
+              <span class="ops-icono-libreta">&#128211;</span>
+            </div>
+            <div class="ops-fila ops-fila--importe">
+              <span class="ops-label">Importe a transferir</span>
+              <span class="ops-moneda">S/</span>
+              <input class="ops-input ops-input--importe" type="text" inputmode="decimal" placeholder="0.00">
+            </div>
+          </div>
+        </div>
+
+        <div class="ops-panel__pie">
+          <button class="ops-siguiente" type="button" data-siguiente>Enviar</button>
+        </div>
+      </div>
+
+      <!-- Últimos movimientos -->
+      <div class="movs-head">
+        <h2 class="movs-title">Últimos movimientos</h2>
+        <div class="movs-iconos">
+          <span class="movs-icono" title="Descargar XLS">XLS</span>
+          <span class="movs-icono movs-icono--pdf" title="Descargar PDF">PDF</span>
+          <span class="movs-icono movs-icono--imprimir" title="Imprimir">&#128424;</span>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="tabla tabla--movs">
+          <thead>
+            <tr>
+              <th class="col-fecha">Fecha</th>
+              <th class="col-desc">Descripción</th>
+              <th class="col-monto">Monto</th>
+            </tr>
+          </thead>
+          <tbody id="movs-tbody"><!-- Renderizado por JS --></tbody>
+        </table>
+      </div>
     </section>
       </div>
     </div>
   </main>
 
   <script src="js/datos.js"></script>
+  <script src="js/usuarios.js"></script>
   <script src="js/ui.js"></script>
   <script src="js/tarjetas.js"></script>
 </body>
