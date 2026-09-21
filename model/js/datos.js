@@ -145,6 +145,7 @@ function operacionDe(desc) {
 
 (function () {
   let n = 510;
+  const estados = ["Aprobado", "Aprobado", "Aprobado", "Pendiente", "Rechazado"];
   [...cuentas, ...tarjetas].forEach((p) => {
     (p.movimientos || []).forEach((m, i) => {
       m.numero = String(n++);
@@ -162,6 +163,7 @@ function operacionDe(desc) {
         String(fv.getMonth() + 1).padStart(2, "0") + "/" +
         fv.getFullYear();
       m.operacion = operacionDe(m.descripcion);
+      m.estado = m.monto >= 0 ? "Aprobado" : estados[i % estados.length];
     });
   });
 })();

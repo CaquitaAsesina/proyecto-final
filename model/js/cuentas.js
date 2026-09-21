@@ -70,6 +70,7 @@ function renderDetalle() {
 
   // Producto actual (para initDetalleMovimientos)
   window.__productoActual = cuenta;
+  window.__productoActual.tipo = "cuenta";
 
   // Resumen
   numEl.textContent = cuenta.numero;

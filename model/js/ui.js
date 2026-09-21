@@ -255,13 +255,13 @@ function toggleDetalleMovimiento(tr, mov, tbody) {
           <h4 class="movs-detalle__titulo">Información de movimiento</h4>
           <div class="movs-detalle__campos">
             <div class="movs-campo"><dt>N° del movimiento</dt><dd>${mov.numero}</dd></div>
-            <div class="movs-campo"><dt>Operación</dt><dd>${mov.operacion}</dd></div>
+            <div class="movs-campo"><dt>Estado</dt><dd>${mov.estado || (mov.monto >= 0 ? "Aprobado" : "Aprobado")}</dd></div>
             <div class="movs-campo"><dt>Centro</dt><dd>${mov.centro}</dd></div>
-            <div class="movs-campo"><dt>Tipo</dt><dd>${mov.tipo}</dd></div>
+            <div class="movs-campo"><dt>Tipo</dt><dd>${window.__productoActual && window.__productoActual.tipo === "tarjeta" ? "Tarjeta de Crédito" : "Cuenta de Débito"}</dd></div>
             <div class="movs-campo"><dt>Fecha Operación</dt><dd>${mov.fecha}</dd></div>
             <div class="movs-campo"><dt>Hora</dt><dd>${mov.hora}</dd></div>
-            <div class="movs-campo"><dt>Fecha Valor</dt><dd>${mov.fechaValor}</dd></div>
-            <div class="movs-campo"><dt>Fecha Contable</dt><dd>${mov.fechaContable}</dd></div>
+            <div class="movs-campo"><dt>País destino</dt><dd>Perú</dd></div>
+            <div class="movs-campo"><dt>N° de cuenta o tarjeta</dt><dd>${window.__productoActual ? window.__productoActual.numero : ""}</dd></div>
           </div>
         </div>
       </div>
@@ -341,12 +341,22 @@ function initOperaciones() {
     });
   }
 
-  // Botón Siguiente (por ahora solo valida que haya datos)
+  // Botón Enviar: realiza la transferencia
   const siguiente = panel.querySelector("[data-siguiente]");
   if (siguiente) {
     siguiente.addEventListener("click", () => {
       const activa = panel.querySelector(".ops-form--activa");
       if (!activa) return;
+
+      // Cuenta origen (la que está seleccionada)
+      const cuentaOrigen = window.__productoActual;
+      if (!cuentaOrigen) {
+        alert("Seleccione una cuenta origen.");
+        return;
+      }
+
+      let destino = "";
+      let importe = 0;
 
       if (activa.dataset.form === "mis-cuentas") {
         const val = activa.querySelector(".ops-select").value;
@@ -354,28 +364,188 @@ function initOperaciones() {
           alert("Seleccione una cuenta destino.");
           return;
         }
+        if (val === cuentaOrigen.numero) {
+          alert("La cuenta destino no puede ser la misma que la origen.");
+          return;
+        }
+        destino = val;
       } else {
-        const vacio = [...activa.querySelectorAll(".ops-input")].some(
-          (i) => i.tagName === "INPUT" && !i.value.trim()
-        );
+        // Terceros u Otros Bancos
+        const inputs = activa.querySelectorAll(".ops-input:not(.ops-input--fijo):not(.ops-input--importe)");
+        const vacio = [...inputs].some((i) => i.tagName === "INPUT" && !i.value.trim());
         if (vacio) {
           alert("Complete el número de cuenta destino.");
           return;
         }
+        const partes = [activa.querySelector(".ops-input--fijo")?.textContent || "0011"];
+        inputs.forEach((i) => { if (i.value) partes.push(i.value); });
+        destino = partes.join("-");
       }
 
-      // Importe (en Mis cuentas y Otros Bancos)
+      // Importe
       const importeInput = activa.querySelector(".ops-input--importe");
       if (importeInput) {
-        const importe = parseFloat(importeInput.value.replace(",", "."));
+        importe = parseFloat(importeInput.value.replace(",", "."));
         if (isNaN(importe) || importe <= 0) {
           alert("Ingrese un importe válido a transferir.");
           importeInput.focus();
           return;
         }
+      } else {
+        alert("Ingrese un importe a transferir.");
+        return;
       }
 
-      alert("Paso 1 completado: cuenta destino registrada. (Paso 2 próximamente)");
+      // Verificar fondos suficientes
+      if (importe > cuentaOrigen.saldoDisponible) {
+        alert("Saldo insuficiente. Disponible: " + dinero(cuentaOrigen.saldoDisponible));
+        return;
+      }
+
+      // Realizar la transferencia
+      const hoy = new Date();
+      const fecha = String(hoy.getDate()).padStart(2, "0") + "/" +
+                    String(hoy.getMonth() + 1).padStart(2, "0") + "/" +
+                    hoy.getFullYear();
+
+      // Descripción según tipo
+      let descripcion = "";
+      if (activa.dataset.form === "mis-cuentas") {
+        const cuentaDestino = cuentas.find((c) => c.numero === destino);
+        descripcion = "TRANSFERENCIA CTA " + cuentaDestino.nombre;
+      } else if (activa.dataset.form === "terceros") {
+        descripcion = "TRANSFERENCIA A TERCEROS " + destino;
+      } else {
+        descripcion = "TRANSFERENCIA OTROS BANCOS " + destino;
+      }
+
+      // Descontar del origen
+      cuentaOrigen.saldoDisponible -= importe;
+      cuentaOrigen.saldoContable -= importe;
+
+      // Agregar movimiento al origen
+      cuentaOrigen.movimientos.unshift({
+        fecha: fecha,
+        descripcion: descripcion,
+        monto: -importe,
+        numero: String(600 + Math.floor(Math.random() * 400)),
+        centro: "0212",
+        tipo: "AUTOMATICA",
+        hora: String(hoy.getHours()).padStart(2, "0") + ":" + String(hoy.getMinutes()).padStart(2, "0") + ":00",
+        fechaContable: fecha,
+        fechaValor: fecha,
+        operacion: "TRANSFERENCIA CTA",
+        estado: "Aprobado"
+      });
+
+      // Si esTransferencia a "Mis cuentas", también abonar al destino
+      if (activa.dataset.form === "mis-cuentas") {
+        const cuentaDestino = cuentas.find((c) => c.numero === destino);
+        if (cuentaDestino) {
+          cuentaDestino.saldoDisponible += importe;
+          cuentaDestino.saldoContable += importe;
+          cuentaDestino.movimientos.unshift({
+            fecha: fecha,
+            descripcion: "TRANSFERENCIA RECIBIDA DE " + cuentaOrigen.nombre,
+            monto: importe,
+            numero: String(600 + Math.floor(Math.random() * 400)),
+            centro: "0212",
+            tipo: "AUTOMATICA",
+            hora: String(hoy.getHours()).padStart(2, "0") + ":" + String(hoy.getMinutes()).padStart(2, "0") + ":00",
+            fechaContable: fecha,
+            fechaValor: fecha,
+            operacion: "TRANSFERENCIA CTA",
+            estado: "Aprobado"
+          });
+        }
+      }
+
+      // Limpiar formulario
+      activa.querySelectorAll("input").forEach((i) => { i.value = ""; });
+      if (activa.querySelector(".ops-select")) activa.querySelector(".ops-select").value = "";
+
+      // Cerrar panel y actualizar UI
+      abrirPanelOperaciones(false);
+      limpiarVistaURL();
+
+      // Refrescar la vista
+      if (typeof renderCuentas === "function") renderCuentas();
+      if (typeof renderDetalle === "function") renderDetalle();
+
+      // Mostrar modal de éxito
+      mostrarModalExito({
+        titulo: "Transferencia exitosa",
+        mensaje: "La transferencia se ha completado correctamente.",
+        datos: [
+          { label: "Origen", valor: cuentaOrigen.numero },
+          { label: "Destino", valor: destino },
+          { label: "Importe", valor: dinero(importe) },
+          { label: "Fecha", valor: fecha },
+          { label: "Estado", valor: "Aprobado" }
+        ]
+      });
     });
   }
+}
+
+// ---------- Modal de confirmación ----------
+function mostrarModalExito(config) {
+  // Cerrar modal anterior si existe
+  const anterior = document.querySelector(".modal-overlay");
+  if (anterior) anterior.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "modal-overlay";
+
+  const datosHtml = (config.datos || []).map((d) =>
+    '<div class="modal__dato"><span class="modal__dato-label">' + d.label + '</span><span class="modal__dato-valor">' + esc(d.valor) + '</span></div>'
+  ).join("");
+
+  overlay.innerHTML =
+    '<div class="modal">' +
+      '<div class="modal__header">' +
+        '<span class="modal__icono">&#10003;</span>' +
+        '<h3 class="modal__titulo">' + esc(config.titulo) + '</h3>' +
+      '</div>' +
+      '<div class="modal__body">' +
+        '<p class="modal__texto">' + esc(config.mensaje) + '</p>' +
+        (datosHtml ? '<div class="modal__datos">' + datosHtml + '</div>' : '') +
+      '</div>' +
+      '<div class="modal__footer">' +
+        '<button class="modal__btn" type="button">Entendido</button>' +
+      '</div>' +
+    '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Animar entrada
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      overlay.classList.add("is-visible");
+    });
+  });
+
+  // Cerrar al hacer clic en "Entendido"
+  overlay.querySelector(".modal__btn").addEventListener("click", () => {
+    cerrarModal(overlay);
+  });
+
+  // Cerrar al hacer clic fuera del modal
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) cerrarModal(overlay);
+  });
+
+  // Cerrar con Escape
+  const handlerEscape = (e) => {
+    if (e.key === "Escape") {
+      cerrarModal(overlay);
+      document.removeEventListener("keydown", handlerEscape);
+    }
+  };
+  document.addEventListener("keydown", handlerEscape);
+}
+
+function cerrarModal(overlay) {
+  overlay.classList.remove("is-visible");
+  setTimeout(() => overlay.remove(), 280);
 }

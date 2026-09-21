@@ -33,6 +33,7 @@
     <nav class="menu">
       <div class="menu__inner">
         <a href="analista.html" class="menu__link is-active">Analista</a>
+        <a href="reglas.html" class="menu__link">Reglas</a>
       </div>
     </nav>
   </header>
@@ -67,7 +68,7 @@
             <div class="an-filtros">
               <div class="an-filtro an-filtro--buscar">
                 <label for="an-buscar">Buscar</label>
-                <input id="an-buscar" type="text" class="an-input" placeholder="Cliente, descripción o producto...">
+                <input id="an-buscar" type="text" class="an-input" placeholder="Cliente o destino...">
               </div>
 
               <div class="an-filtro">
@@ -78,34 +79,27 @@
               </div>
 
               <div class="an-filtro">
-                <label for="an-f-producto">Producto</label>
-                <select id="an-f-producto" class="an-input">
-                  <option value="">Todos</option>
-                  <option value="cuenta">Cuentas</option>
-                  <option value="tarjeta">Tarjetas</option>
-                </select>
-              </div>
-
-              <div class="an-filtro">
-                <label for="an-f-operacion">Operación</label>
-                <select id="an-f-operacion" class="an-input">
-                  <option value="">Todas</option>
-                  <option value="TRANSFERENCIA MOVIL">TRANSFERENCIA MOVIL</option>
-                  <option value="TRANSFERENCIA CTA">TRANSFERENCIA CTA</option>
-                  <option value="COMPRA COMERC">COMPRA COMERC</option>
-                  <option value="ABONO NOMINA">ABONO NOMINA</option>
-                  <option value="RETIRO CAJERO">RETIRO CAJERO</option>
-                  <option value="ABONO INTERES">ABONO INTERES</option>
-                  <option value="DEPOSITO CTA">DEPOSITO CTA</option>
-                  <option value="PAGO SERVICIOS">PAGO SERVICIOS</option>
-                  <option value="PAGO TARJETA">PAGO TARJETA</option>
-                  <option value="OPERACION VARIAS">OPERACION VARIAS</option>
-                </select>
-              </div>
-
-              <div class="an-filtro">
-                <label for="an-f-tipo">Importe</label>
+                <label for="an-f-tipo">Tipo</label>
                 <select id="an-f-tipo" class="an-input">
+                  <option value="">Todos</option>
+                  <option value="cuenta">Cuenta</option>
+                  <option value="tarjeta">Tarjeta</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-estado">Estado</label>
+                <select id="an-f-estado" class="an-input">
+                  <option value="">Todos</option>
+                  <option value="Aprobado">Aprobado</option>
+                  <option value="Pendiente">Pendiente</option>
+                  <option value="Rechazado">Rechazado</option>
+                </select>
+              </div>
+
+              <div class="an-filtro">
+                <label for="an-f-positivo">Importe</label>
+                <select id="an-f-positivo" class="an-input">
                   <option value="">Todos</option>
                   <option value="positivo">Ingresos</option>
                   <option value="negativo">Salidas</option>
@@ -132,8 +126,8 @@
         <!-- ============ Resumen de lo filtrado ============ -->
         <section class="an-resumen">
           <span class="an-resumen__item"><strong id="an-n">0</strong> transacciones</span>
-          <span class="an-resumen__item">Ingresos: <strong id="an-ingresos" class="an-verde">S/ 0.00</strong></span>
-          <span class="an-resumen__item">Salidas: <strong id="an-salidas" class="an-rojo">S/ 0.00</strong></span>
+          <span class="an-resumen__item">Débito: <strong id="an-ingresos" class="an-verde">S/ 0.00</strong></span>
+          <span class="an-resumen__item">Crédito: <strong id="an-salidas" class="an-rojo">S/ 0.00</strong></span>
           <span class="an-resumen__item an-resumen__item--neto">Neto: <strong id="an-neto">S/ 0.00</strong></span>
         </section>
 
@@ -152,9 +146,9 @@
                   <tr>
                     <th class="an-col-fecha"><button type="button" class="an-th-btn" data-orden="fecha">Fecha</button></th>
                     <th>Cliente</th>
-                    <th>Producto</th>
-                    <th>Operación</th>
-                    <th>Descripción</th>
+                    <th>Destino</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
                     <th class="an-col-importe"><button type="button" class="an-th-btn" data-orden="importe">Importe</button></th>
                     <th></th>
                   </tr>

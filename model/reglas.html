@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco — Reglas</title>
+  <link rel="stylesheet" href="css/vendor/bootstrap-grid.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="stylesheet" href="css/analista.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__util">
+      <div class="topbar__util-inner">
+        <a href="#" class="util-link util-link--icon">Libro de reclamaciones</a>
+        <a href="#" class="util-link util-link--salir">← Salir</a>
+      </div>
+    </div>
+    <div class="topbar__main">
+      <div class="topbar__main-inner">
+        <a class="brand" href="analista.html">
+          <span class="brand__name">BANCO</span>
+        </a>
+        <div class="usuario">
+          <span class="usuario__avatar">👤</span>
+          <span class="usuario__info">
+            <span class="usuario__nombre">ANALISTA <span class="usuario__chevron">⌄</span></span>
+            <span class="usuario__rol" id="an-rol">ANALISTA · AN-000</span>
+          </span>
+        </div>
+      </div>
+    </div>
+    <nav class="menu">
+      <div class="menu__inner">
+        <a href="analista.html" class="menu__link">Analista</a>
+        <a href="reglas.html" class="menu__link is-active">Reglas</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="row g-0">
+      <div class="col-12">
+
+        <!-- ============ Título ============ -->
+        <div class="modulo-head">
+          <h1 class="modulo-title">Reglas del sistema</h1>
+        </div>
+        <div class="modulo-linea"></div>
+
+        <!-- ============ Reglas ============ -->
+        <section class="an-resumen">
+          <span class="an-resumen__item">Mínimo requerido: <strong>60%</strong> para aprobar transacción</span>
+          <span class="an-resumen__item">Total reglas: <strong>5</strong></span>
+          <span class="an-resumen__item an-resumen__item--neto">Peso total: <strong>100%</strong></span>
+        </section>
+
+        <section class="panel" id="panel-reglas">
+          <button class="panel__header" type="button" data-toggle="panel-reglas" aria-expanded="true">
+            <h2 class="panel__title">Reglas vigentes</h2>
+            <span class="panel__arrow" aria-hidden="true">▲</span>
+          </button>
+
+          <div class="panel__body" id="panel-reglas-body">
+            <div class="table-responsive">
+              <table class="an-tabla">
+                <thead>
+                  <tr>
+                    <th class="an-col-fecha">Fecha</th>
+                    <th>Peso</th>
+                    <th>Regla</th>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+                <tbody id="reglas-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="js/datos.js"></script>
+  <script src="js/usuarios.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/reglas.js"></script>
+</body>
+</html>

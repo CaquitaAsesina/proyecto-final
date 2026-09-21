@@ -88,6 +88,7 @@ function renderDetalle() {
 
   // Producto actual (para initDetalleMovimientos)
   window.__productoActual = tarjeta;
+  window.__productoActual.tipo = "tarjeta";
 
   // Resumen
   numEl.textContent = tarjeta.numero;

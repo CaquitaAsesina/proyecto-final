@@ -99,11 +99,11 @@
 }
 
 .an-verde {
-  color: var(--verde);
+  color: #7c3aed;
 }
 
 .an-rojo {
-  color: #c0392b;
+  color: var(--azul);
 }
 
 /* --- Tabla consolidada --- */
@@ -188,25 +188,28 @@
   font-size: 13px;
 }
 
-.an-producto {
-  font-family: "Courier New", monospace;
-  font-size: 11.5px;
+.an-destino {
+  min-width: 150px;
+}
+
+.an-tipo {
   white-space: nowrap;
 }
 
-.an-badge--cuenta,
-.an-badge--tarjeta {
-  margin-right: 3px;
+.an-estado {
+  font-size: 13px;
 }
 
-/* La operación puede partirse en 2 líneas si el espacio es justo;
-   con espacio sobrante queda en una sola línea */
-.an-oper {
-  max-width: 145px;
+.an-estado--aprobado {
+  color: var(--verde);
 }
 
-.an-desc {
-  min-width: 150px;
+.an-estado--pendiente {
+  color: #b8860b;
+}
+
+.an-estado--rechazado {
+  color: #c0392b;
 }
 
 .an-col-importe {
@@ -218,12 +221,12 @@
   width: 90px;
 }
 
-.an-monto--neg {
-  color: #c0392b;
+.an-monto--cuenta {
+  color: #7c3aed;
 }
 
-.an-monto--pos {
-  color: var(--verde);
+.an-monto--tarjeta {
+  color: var(--azul);
 }
 
 .an-col-ver {
@@ -320,4 +323,60 @@
   .an-cliente {
     white-space: nowrap;
   }
+}
+
+/* --- Módulo Reglas --- */
+.an-regla {
+  font-weight: 600;
+  color: var(--azul-oscuro);
+}
+
+.an-importancia {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 10px;
+}
+
+.an-importancia--critica {
+  background: #fde8e8;
+  color: #c0392b;
+}
+
+.an-importancia--alta {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.an-importancia--media {
+  background: #e3f0fa;
+  color: var(--azul);
+}
+
+.an-importancia--baja {
+  background: #e6f9e6;
+  color: #1a7a1a;
+}
+
+.an-porcentaje {
+  font-weight: 600;
+  color: var(--azul-oscuro);
+  text-align: center;
+}
+
+.an-regla--critica {
+  color: #c0392b;
+}
+
+.an-regla--alta {
+  color: #b8860b;
+}
+
+.an-regla--media {
+  color: var(--azul);
+}
+
+.an-regla--baja {
+  color: #1a7a1a;
 }
